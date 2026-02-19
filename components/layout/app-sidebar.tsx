@@ -1,30 +1,37 @@
 import { NavMain } from '@/components/layout/nav-main';
 import { NavUser } from '@/components/layout/nav-user';
-import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
+import { Sidebar, SidebarHeader, SidebarContent, SidebarRail } from '@/components/ui/sidebar';
 import { currentUser } from '@clerk/nextjs/server';
-import { LayoutDashboardIcon } from 'lucide-react';
+import { BotIcon, FileTextIcon, LayoutDashboardIcon } from 'lucide-react';
 
-const items = [
+const sections = [
   {
     title: 'Dashboard',
-    icon: LayoutDashboardIcon,
-    isActive: true,
     items: [
       {
         title: 'Overview',
-        url: '/dashboard/overview'
+        url: '/overview',
+        icon: LayoutDashboardIcon
       },
       {
         title: 'Chatbot',
-        url: '/dashboard/chatbot'
+        url: '/chatbot',
+        icon: BotIcon
+      }
+    ]
+  },
+  {
+    title: 'Storage',
+    items: [
+      {
+        title: 'Documents',
+        url: '/papers',
+        icon: FileTextIcon
       },
       {
-        title: 'Papers',
-        url: '/dashboard/papers'
-      },
-      {
-        title: 'Storage',
-        url: '/dashboard/storage'
+        title: 'Multimedia',
+        url: '/storage',
+        icon: FileTextIcon
       }
     ]
   }
@@ -48,7 +55,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
         <NavUser user={userData} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={items} />
+        <NavMain sections={sections} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
