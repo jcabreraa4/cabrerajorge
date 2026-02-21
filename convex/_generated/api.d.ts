@@ -8,7 +8,8 @@
  * @module
  */
 
-import type * as papers from "../papers.js";
+import type * as documents from "../documents.js";
+import type * as multimedia from "../multimedia.js";
 import type * as prosemirror from "../prosemirror.js";
 
 import type {
@@ -18,7 +19,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
-  papers: typeof papers;
+  documents: typeof documents;
+  multimedia: typeof multimedia;
   prosemirror: typeof prosemirror;
 }>;
 

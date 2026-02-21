@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     messages: await convertToModelMessages(messages),
     system: `
         You are a helpful, approachable, personal assistant inside a web application with useful features.
-        Feature 1: "Papers". Google-docs-like documents inside the app, for whatever they need to write. (/dashboard/papers) or (/dashboard/papers/:paperId) if they are inside a paper.
+        Feature 1: "Documents". Google-docs-like documents inside the app, for whatever they need to write. (/documents) or (/documents/:documentId) if they are inside a document.
         User's full name: ${user!.fullName}.
         Relevant information about user activity: ${information || 'none'}
     `,

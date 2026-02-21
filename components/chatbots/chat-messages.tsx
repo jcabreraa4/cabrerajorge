@@ -6,18 +6,17 @@ import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ui/r
 import { OpenIn, OpenInChatGPT, OpenInClaude, OpenInContent, OpenInT3, OpenInTrigger } from '@/components/ui/open-in-chat';
 import { Attachment, AttachmentPreview, AttachmentRemove, Attachments, type AttachmentData } from '@/components/ui/attachments';
 import { toast } from 'sonner';
-
 import type { ChatMessage } from '@/app/api/chat/route';
 import { CopyIcon, Loader2Icon, RefreshCcwIcon } from 'lucide-react';
 
-interface ChatConversationProps {
+interface ChatMessagesProps {
   messages: ChatMessage[];
   status: string;
   regenerate: () => Promise<void>;
   lastInput: string;
 }
 
-export function ChatMessages({ messages, status, regenerate, lastInput }: ChatConversationProps) {
+export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMessagesProps) {
   function copyMessage(message: string) {
     navigator.clipboard.writeText(message);
     toast.success('Message copied to clipboard successfully.');
@@ -29,6 +28,7 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatCo
         {messages.map((message, messageIndex) => {
           const isLastMessage = messageIndex === messages.length - 1;
           const fileParts = message.parts.filter((part) => part.type === 'file');
+
           return (
             <Fragment key={message.id}>
               {message.role === 'assistant' && message.parts.filter((part) => part.type === 'source-url').length > 0 && (

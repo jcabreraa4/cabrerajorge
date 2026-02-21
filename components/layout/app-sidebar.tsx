@@ -2,7 +2,7 @@ import { NavMain } from '@/components/layout/nav-main';
 import { NavUser } from '@/components/layout/nav-user';
 import { Sidebar, SidebarHeader, SidebarContent, SidebarRail } from '@/components/ui/sidebar';
 import { currentUser } from '@clerk/nextjs/server';
-import { BotIcon, FileTextIcon, LayoutDashboardIcon } from 'lucide-react';
+import { BotIcon, FileTextIcon, ImageIcon, LayoutDashboardIcon } from 'lucide-react';
 
 const sections = [
   {
@@ -14,8 +14,8 @@ const sections = [
         icon: LayoutDashboardIcon
       },
       {
-        title: 'Chatbot',
-        url: '/chatbot',
+        title: 'Chatbots',
+        url: '/chatbots',
         icon: BotIcon
       }
     ]
@@ -25,13 +25,13 @@ const sections = [
     items: [
       {
         title: 'Documents',
-        url: '/papers',
+        url: '/documents',
         icon: FileTextIcon
       },
       {
         title: 'Multimedia',
-        url: '/storage',
-        icon: FileTextIcon
+        url: '/multimedia',
+        icon: ImageIcon
       }
     ]
   }

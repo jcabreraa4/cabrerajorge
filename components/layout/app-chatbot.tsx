@@ -3,16 +3,25 @@
 import { useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { PromptInput, PromptInputBody, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from '@/components/ui/prompt-input';
-import { models, type ModelId } from '@/lib/chatbot/models';
-import { GlobeIcon, Plus, Wrench } from 'lucide-react';
-import { ChatMessages } from '@/components/chatbot/chat-messages';
-import { ChatSuggestions } from '@/components/chatbot/chat-suggestions';
-import { AttachedFiles } from '@/components/chatbot/attached-files';
-import { ModelsDialog } from '@/components/chatbot/models-dialog';
 import type { ChatMessage } from '@/app/api/chat/route';
+import { GlobeIcon, Plus, Wrench } from 'lucide-react';
+import { ChatMessages } from '@/components/chatbots/chat-messages';
+import { useChatHelperStore } from '@/store/helper-store';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { AttachedFiles } from '@/components/chatbots/attached-files';
+import { ModelsDialog } from '@/components/chatbots/models-dialog';
+import { cn } from '@/lib/utils';
+import { models, type ModelId } from '@/lib/chatbot/models';
 
-export default function Page() {
+export function AppChatbot({ className }: { className?: string }) {
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const segments = pathname.split('/').filter(Boolean);
+
+  const show = useChatHelperStore((state) => state.show);
+  const isChatbotPage = segments[0] === 'chatbots';
 
   const [input, setInput] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
@@ -22,18 +31,23 @@ export default function Page() {
 
   const selectedModel = models.find((m) => m.id === chatModel);
 
+  const fullPath = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
+  const information = `The user location within the app is ${fullPath} so maybe he is asking for something related to that.`;
+
   function handleSubmit() {
     const dt = new DataTransfer();
     files.forEach((file) => dt.items.add(file));
-    sendMessage({ text: input, files: dt.files }, { body: { model: chatModel } });
+    sendMessage({ text: input, files: dt.files }, { body: { model: chatModel, information } });
     setLastInput(input);
     setInput('');
     setFiles([]);
   }
 
+  if (!show || isChatbotPage) return null;
+
   return (
-    <main className="w-full flex flex-col gap-1 items-center">
-      <section className="flex-1 min-h-0 w-full overflow-y-scroll flex justify-center">
+    <section className={cn('h-full w-120 flex flex-col gap-1 items-center print:hidden', className)}>
+      <div className="flex-1 min-h-0 w-full overflow-y-scroll flex justify-center">
         <div className="w-full max-w-200">
           <ChatMessages
             messages={messages}
@@ -42,22 +56,12 @@ export default function Page() {
             lastInput={lastInput}
           />
         </div>
-      </section>
-      {((messages.length == 0 && !input.trim()) || files.length != 0) && (
-        <section className="w-full max-w-200 h-9">
-          {messages.length == 0 && !input.trim() && files.length === 0 ? (
-            <ChatSuggestions
-              sendMessage={sendMessage}
-              setLastInput={setLastInput}
-              chatModel={chatModel}
-            />
-          ) : (
-            <AttachedFiles
-              files={files}
-              setFiles={setFiles}
-            />
-          )}
-        </section>
+      </div>
+      {files.length !== 0 && (
+        <AttachedFiles
+          files={files}
+          setFiles={setFiles}
+        />
       )}
       <PromptInput
         globalDrop
@@ -96,14 +100,12 @@ export default function Page() {
                 className={`hidden xl:flex cursor-pointer ${selectedModel?.useTools ? 'hover:bg-primary' : 'hover:bg-transparent text-black dark:text-white'}`}
               >
                 <Wrench size={16} />
-                Tool Calling
               </PromptInputButton>
               <PromptInputButton
                 variant={selectedModel?.webSearch ? 'default' : 'outline'}
                 className={`hidden xl:flex cursor-pointer ${selectedModel?.webSearch ? 'hover:bg-primary' : 'hover:bg-transparent text-black dark:text-white'}`}
               >
                 <GlobeIcon size={16} />
-                Web Search
               </PromptInputButton>
             </div>
             <ModelsDialog
@@ -118,6 +120,6 @@ export default function Page() {
           />
         </PromptInputFooter>
       </PromptInput>
-    </main>
+    </section>
   );
 }

@@ -16,11 +16,7 @@ import { Id } from '@/convex/_generated/dataModel';
 import { useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 
-interface EditorPaperProps {
-  paperId: Id<'papers'>;
-}
-
-export function EditorPaper({ paperId }: EditorPaperProps) {
+export function EditorPaper({ paperId }: { paperId: Id<'documents'> }) {
   const { setEditor } = useEditorStore();
   const sync = useTiptapSync(api.prosemirror, paperId);
 

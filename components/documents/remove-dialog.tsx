@@ -8,19 +8,19 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 interface DeleteDialogProps {
-  id: Id<'papers'>;
+  id: Id<'documents'>;
   redirect?: boolean;
   children: React.ReactNode;
 }
 
 export function RemoveDialog({ id, redirect = false, children }: DeleteDialogProps) {
   const router = useRouter();
-  const deletePaper = useMutation(api.papers.deleteById);
+  const deleteDocument = useMutation(api.documents.deleteById);
 
-  function removePaper() {
-    deletePaper({ id }).finally(() => {
-      redirect && router.push('/dashboard/papers');
-      toast.success('Paper removed successfully.');
+  function removeDocument() {
+    deleteDocument({ id }).finally(() => {
+      redirect && router.push('/documents');
+      toast.success('Document removed successfully.');
     });
   }
 
@@ -29,18 +29,18 @@ export function RemoveDialog({ id, redirect = false, children }: DeleteDialogPro
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Remove Paper</DialogTitle>
-          <DialogDescription>Remove this paper from your account.</DialogDescription>
+          <DialogTitle>Remove Document</DialogTitle>
+          <DialogDescription>Remove document from your account.</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
             <Button
               variant="destructive"
               className="w-full cursor-pointer"
-              onClick={removePaper}
+              onClick={removeDocument}
             >
               <TrashIcon />
-              Remove Paper
+              Remove Document
             </Button>
           </DialogClose>
         </DialogFooter>

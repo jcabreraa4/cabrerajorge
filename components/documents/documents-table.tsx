@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { type Paper } from '@/convex/schema';
+import { type Document } from '@/convex/schema';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ExternalLinkIcon, FilePenIcon, FileTextIcon, MoreHorizontalIcon, SaveIcon, TrashIcon } from 'lucide-react';
@@ -8,11 +8,15 @@ import { useRouter } from 'next/navigation';
 import { UpdateDialog } from './update-dialog';
 import { RemoveDialog } from './remove-dialog';
 
-export function PapersTable({ papers }: { papers: Paper[] }) {
+export function DocumentsTable({ documents }: { documents: Document[] }) {
   const router = useRouter();
 
-  function openPaper(id: string) {
-    router.push(`/dashboard/papers/${id}`);
+  function openDocument(id: string) {
+    router.push(`/documents/${id}`);
+  }
+
+  function openWindow(id: string) {
+    window.open(`/documents/${id}`, '_blank');
   }
 
   return (
@@ -26,28 +30,28 @@ export function PapersTable({ papers }: { papers: Paper[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {papers.map((paper) => (
+        {documents.map((document) => (
           <TableRow
-            key={paper._id}
+            key={document._id}
             className="h-12 cursor-pointer p-20"
           >
             <TableCell
               className="w-12.5 p-4"
-              onClick={() => openPaper(paper._id)}
+              onClick={() => openDocument(document._id)}
             >
               <FileTextIcon />
             </TableCell>
             <TableCell
               className="font-medium"
-              onClick={() => openPaper(paper._id)}
+              onClick={() => openDocument(document._id)}
             >
-              <div className="w-35 max-w-120 md:w-fit truncate">{paper.title}</div>
+              <div className="w-35 max-w-120 md:w-fit truncate">{document.title}</div>
             </TableCell>
             <TableCell
               className="text-muted-foreground hidden md:table-cell"
-              onClick={() => openPaper(paper._id)}
+              onClick={() => openDocument(document._id)}
             >
-              {format(new Date(paper._creationTime), 'MMM dd, yyyy')}
+              {format(new Date(document._creationTime), 'MMM dd, yyyy')}
             </TableCell>
             <TableCell className="text-right">
               <DropdownMenu>
@@ -63,32 +67,32 @@ export function PapersTable({ papers }: { papers: Paper[] }) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <UpdateDialog
-                    id={paper._id}
-                    title={paper.title}
+                    id={document._id}
+                    title={document.title}
                   >
                     <DropdownMenuItem
                       className="cursor-pointer"
                       onSelect={(e) => e.preventDefault()}
                     >
                       <FilePenIcon />
-                      Rename Paper
+                      Rename Document
                     </DropdownMenuItem>
                   </UpdateDialog>
                   <DropdownMenuItem
                     className="cursor-pointer"
-                    onClick={() => window.open(`/dashboard/papers/${paper._id}`, '_blank')}
+                    onClick={() => openWindow(document._id)}
                   >
                     <ExternalLinkIcon />
-                    Open in a Tab
+                    Open in a new Tab
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <RemoveDialog id={paper._id}>
+                  <RemoveDialog id={document._id}>
                     <DropdownMenuItem
                       className="cursor-pointer"
                       onSelect={(e) => e.preventDefault()}
                     >
                       <TrashIcon />
-                      Remove Paper
+                      Remove Document
                     </DropdownMenuItem>
                   </RemoveDialog>
                 </DropdownMenuContent>

@@ -19,11 +19,11 @@ interface CreateButtonProps {
 export function CreateButton({ variant, className, disabled }: CreateButtonProps) {
   const router = useRouter();
 
-  const createPaper = useMutation(api.papers.create);
+  const createDocument = useMutation(api.documents.create);
 
   function handleCreate() {
-    createPaper({ title: 'Untitled Paper', content: '' }).then((paperId) => {
-      router.push(`/dashboard/papers/${paperId}`);
+    createDocument({}).then((documentId) => {
+      router.push(`/documents/${documentId}`);
     });
   }
 
@@ -35,7 +35,7 @@ export function CreateButton({ variant, className, disabled }: CreateButtonProps
       disabled={disabled}
     >
       <PlusIcon />
-      Create Paper
+      Create Document
     </Button>
   );
 }

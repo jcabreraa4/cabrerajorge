@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { AppHeader } from '@/components/layout/app-header';
 import { AppSidebar } from '@/components/layout/app-sidebar';
-import { ChatHelper } from '@/components/layout/chat-helper';
+import { AppChatbot } from '@/components/layout/app-chatbot';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { cookies } from 'next/headers';
 
@@ -12,11 +12,13 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <SidebarInset className="h-screen flex flex-col px-4 pb-4">
+      <SidebarInset className="h-svh overflow-hidden pb-3 lg:pb-4">
         <AppHeader />
-        <div className="flex flex-1 gap-5">
-          <Suspense>{children}</Suspense>
-          <ChatHelper className="hidden 2xl:flex" />
+        <div className="flex flex-1 min-h-0 overflow-hidden">
+          <div className="flex flex-1 min-h-0 overflow-hidden pt-1 px-3 lg:px-4">
+            <Suspense>{children}</Suspense>
+          </div>
+          <AppChatbot className="hidden 2xl:flex" />
         </div>
       </SidebarInset>
     </SidebarProvider>

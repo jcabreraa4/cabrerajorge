@@ -1,15 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { AlignCenterIcon, AlignJustifyIcon, AlignLeftIcon, AlignRightIcon, BoldIcon, ChevronDownIcon, HighlighterIcon, ImageIcon, ItalicIcon, Link2Icon, ListCollapseIcon, ListIcon, ListOrderedIcon, ListTodoIcon, LucideIcon, MinusIcon, PlusIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, SearchIcon, SpellCheckIcon, UnderlineIcon, Undo2Icon, UploadIcon, DownloadIcon, FileBracesCorner, FileCodeCorner, FilePenIcon, FileTextIcon, GlobeIcon, StrikethroughIcon, TextIcon, TrashIcon, TableIcon } from 'lucide-react';
+import { AlignCenterIcon, AlignJustifyIcon, AlignLeftIcon, AlignRightIcon, BoldIcon, ChevronDownIcon, HighlighterIcon, ImageIcon, ItalicIcon, Link2Icon, ListCollapseIcon, ListIcon, ListOrderedIcon, ListTodoIcon, LucideIcon, MinusIcon, PlusIcon, Redo2Icon, RemoveFormattingIcon, SearchIcon, SpellCheckIcon, UnderlineIcon, Undo2Icon, UploadIcon, DownloadIcon, FileBracesCorner, FileCodeCorner, FileTextIcon, GlobeIcon, TableIcon } from 'lucide-react';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { type ColorResult, CirclePicker } from 'react-color';
 import { useEditorStore } from '@/store/editor-store';
-import { Paper } from '@/convex/schema';
+import { Document } from '@/convex/schema';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from '../ui/menubar';
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '../ui/menubar';
 
 interface ToolbarButtonProps {
   onClick?: () => void;
@@ -25,12 +25,8 @@ interface ToolbarSectionsType {
 }
 
 interface DesktopToolbarProps {
-  paper: Paper;
+  document: Document;
   className?: string;
-}
-
-interface DownloadButtonProps {
-  paper: Paper;
 }
 
 function LineHeightButton() {
@@ -548,7 +544,7 @@ function FontFamilyButton() {
   );
 }
 
-function DownloadButton({ paper }: DownloadButtonProps) {
+function DownloadButton({ title }: { title: string }) {
   const { editor } = useEditorStore();
 
   function onDownload(blob: Blob, filename: string) {
@@ -564,21 +560,21 @@ function DownloadButton({ paper }: DownloadButtonProps) {
     if (!editor) return;
     const content = editor.getJSON();
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
-    onDownload(blob, `${paper.title}.json`);
+    onDownload(blob, `${title}.json`);
   }
 
   function onSaveHTML() {
     if (!editor) return;
     const content = editor.getHTML();
     const blob = new Blob([content], { type: 'text/html' });
-    onDownload(blob, `${paper.title}.html`);
+    onDownload(blob, `${title}.html`);
   }
 
   function onSaveText() {
     if (!editor) return;
     const content = editor.getText();
     const blob = new Blob([content], { type: 'text/plain' });
-    onDownload(blob, `${paper.title}.txt`);
+    onDownload(blob, `${title}.txt`);
   }
 
   return (
@@ -632,7 +628,7 @@ function ToolbarSeparator() {
   return <div className="h-6 bg-neutral-300 w-0.5 mx-1" />;
 }
 
-export function DesktopToolbar({ paper, className }: DesktopToolbarProps) {
+export function DesktopToolbar({ document, className }: DesktopToolbarProps) {
   const { editor } = useEditorStore();
 
   const sections: ToolbarSectionsType[][] = [
@@ -700,7 +696,7 @@ export function DesktopToolbar({ paper, className }: DesktopToolbarProps) {
             {...item}
           />
         ))}
-        <DownloadButton paper={paper} />
+        <DownloadButton title={document.title} />
       </div>
       <ToolbarSeparator />
       <FontFamilyButton />

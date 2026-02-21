@@ -9,7 +9,7 @@ import { Id } from '@/convex/_generated/dataModel';
 import { toast } from 'sonner';
 
 interface UpdateDialogProps {
-  id: Id<'papers'>;
+  id: Id<'documents'>;
   title: string;
   children: React.ReactNode;
 }
@@ -17,11 +17,11 @@ interface UpdateDialogProps {
 export function UpdateDialog({ id, title, children }: UpdateDialogProps) {
   const [input, setInput] = useState(title);
 
-  const updatePaper = useMutation(api.papers.updateById);
+  const updateDocument = useMutation(api.documents.updateById);
 
-  function renamePaper() {
-    updatePaper({ id, title: input }).finally(() => {
-      toast.success('Paper renamed successfully.');
+  function renameDocument() {
+    updateDocument({ id, title: input }).finally(() => {
+      toast.success('Document renamed successfully.');
     });
   }
 
@@ -30,8 +30,8 @@ export function UpdateDialog({ id, title, children }: UpdateDialogProps) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Rename Paper</DialogTitle>
-          <DialogDescription>Enter a new name for the paper.</DialogDescription>
+          <DialogTitle>Rename Document</DialogTitle>
+          <DialogDescription>Rename the selected document.</DialogDescription>
         </DialogHeader>
         <Input
           value={input}
@@ -41,10 +41,10 @@ export function UpdateDialog({ id, title, children }: UpdateDialogProps) {
           <DialogClose asChild>
             <Button
               className="w-full cursor-pointer"
-              onClick={renamePaper}
+              onClick={renameDocument}
             >
               <SaveIcon />
-              Rename Paper
+              Rename Document
             </Button>
           </DialogClose>
         </DialogFooter>

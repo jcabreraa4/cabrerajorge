@@ -2,52 +2,52 @@ import { Button } from '@/components/ui/button';
 import { BoldIcon, ItalicIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, UnderlineIcon, Undo2Icon, DownloadIcon, FileBracesCorner, FileCodeCorner, FilePenIcon, FileTextIcon, GlobeIcon, StrikethroughIcon, TextIcon, TrashIcon } from 'lucide-react';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from '@/components/ui/menubar';
 import { useEditorStore } from '@/store/editor-store';
-import { Paper } from '@/convex/schema';
+import { type Document } from '@/convex/schema';
 import { UpdateDialog } from './update-dialog';
 import { RemoveDialog } from './remove-dialog';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
 interface MobileToolbarProps {
-  paper: Paper;
+  document: Document;
   className?: string;
 }
 
-export function MobileToolbar({ paper, className }: MobileToolbarProps) {
+function onDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  toast.success('Document ready to be downloaded.');
+}
+
+export function MobileToolbar({ document, className }: MobileToolbarProps) {
   const { editor } = useEditorStore();
 
   function insertTable({ rows, cols }: { rows: number; cols: number }) {
     editor?.chain().focus().insertTable({ rows, cols, withHeaderRow: false }).run();
   }
 
-  function onDownload(blob: Blob, filename: string) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    toast.success('Paper ready to be downloaded.');
-  }
-
   function onSaveJSON() {
     if (!editor) return;
     const content = editor.getJSON();
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
-    onDownload(blob, `${paper.title}.json`);
+    onDownload(blob, `${document.title}.json`);
   }
 
   function onSaveHTML() {
     if (!editor) return;
     const content = editor.getHTML();
     const blob = new Blob([content], { type: 'text/html' });
-    onDownload(blob, `${paper.title}.html`);
+    onDownload(blob, `${document.title}.html`);
   }
 
   function onSaveText() {
     if (!editor) return;
     const content = editor.getText();
     const blob = new Blob([content], { type: 'text/plain' });
-    onDownload(blob, `${paper.title}.txt`);
+    onDownload(blob, `${document.title}.txt`);
   }
 
   return (
@@ -88,8 +88,8 @@ export function MobileToolbar({ paper, className }: MobileToolbarProps) {
           </MenubarSub>
           <MenubarSeparator />
           <UpdateDialog
-            id={paper._id}
-            title={paper.title}
+            id={document._id}
+            title={document.title}
           >
             <MenubarItem onSelect={(e) => e.preventDefault()}>
               <FilePenIcon className="size-4 mr-2" />
@@ -98,7 +98,7 @@ export function MobileToolbar({ paper, className }: MobileToolbarProps) {
           </UpdateDialog>
           <RemoveDialog
             redirect
-            id={paper._id}
+            id={document._id}
           >
             <MenubarItem onSelect={(e) => e.preventDefault()}>
               <TrashIcon className="size-4 mr-2" />
