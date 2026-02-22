@@ -45,10 +45,10 @@ export default function Page() {
           <Empty>
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <FileTextIcon />
+                <FileTextIcon className="size-6" />
               </EmptyMedia>
-              <EmptyTitle>No Documents Available</EmptyTitle>
-              <EmptyDescription>You haven&apos;t created any documents yet. Get started by creating your first document.</EmptyDescription>
+              <EmptyTitle className="text-xl">No Documents Available</EmptyTitle>
+              <EmptyDescription className="text-md">You haven&apos;t created any documents yet. Get started by creating your first document.</EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
               <CreateButton className="min-w-50" />

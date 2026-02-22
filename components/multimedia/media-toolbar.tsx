@@ -94,7 +94,7 @@ function UpdateDialog({ file }: { file: MediaFile }) {
             className="flex-1 cursor-pointer"
             onClick={() =>
               updateFile({ id: file._id, name: name }).finally(() => {
-                toast.success('File information updated successfully.');
+                toast.success('File updated successfully.');
                 setOpen(false);
               })
             }
@@ -104,10 +104,12 @@ function UpdateDialog({ file }: { file: MediaFile }) {
           </Button>
           <Button
             className="flex-1 cursor-pointer"
-            onClick={() => {
-              deleteFile({ id: file._id });
-              setOpen(false);
-            }}
+            onClick={() =>
+              deleteFile({ id: file._id }).finally(() => {
+                toast.success('File deleted successfully.');
+                setOpen(false);
+              })
+            }
           >
             <TrashIcon />
             Delete File

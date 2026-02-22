@@ -4,6 +4,7 @@ import type { UIMessage } from 'ai';
 import type { ComponentProps, HTMLAttributes, ReactElement } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ButtonGroup, ButtonGroupText } from '@/components/ui/button-group';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
@@ -11,9 +12,10 @@ import { cjk } from '@streamdown/cjk';
 import { code } from '@streamdown/code';
 import { math } from '@streamdown/math';
 import { mermaid } from '@streamdown/mermaid';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon, CopyIcon, ExternalLinkIcon } from 'lucide-react';
 import { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { Streamdown } from 'streamdown';
+import { Streamdown, type LinkSafetyModalProps } from 'streamdown';
+import { toast } from 'sonner';
 
 export type MessageProps = HTMLAttributes<HTMLDivElement> & {
   from: UIMessage['role'];
@@ -254,11 +256,54 @@ export type MessageResponseProps = ComponentProps<typeof Streamdown>;
 
 const streamdownPlugins = { cjk, code, math, mermaid };
 
+const LinkSafetyModal = ({ url, isOpen, onClose, onConfirm }: LinkSafetyModalProps) => (
+  <Dialog
+    open={isOpen}
+    onOpenChange={(open) => {
+      if (!open) onClose();
+    }}
+  >
+    <DialogContent className="sm:max-w-2xl">
+      <DialogHeader>
+        <DialogTitle>Open external link?</DialogTitle>
+        <DialogDescription>You're about to visit an external website.</DialogDescription>
+      </DialogHeader>
+      <div className="rounded-md border bg-muted px-3 py-2 text-sm break-all">{url}</div>
+      <DialogFooter>
+        <Button
+          type="button"
+          variant="outline"
+          className="flex-1 cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText(url);
+            toast.success('Link copied to clipboard successfully.');
+          }}
+        >
+          <CopyIcon />
+          Copy link
+        </Button>
+        <Button
+          type="button"
+          className="flex-1 cursor-pointer"
+          onClick={onConfirm}
+        >
+          <ExternalLinkIcon />
+          Open link
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);
+
 export const MessageResponse = memo(
   ({ className, ...props }: MessageResponseProps) => (
     <Streamdown
-      className={cn('size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0', className)}
+      className={cn('size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_a]:cursor-pointer', className)}
       plugins={streamdownPlugins}
+      linkSafety={{
+        enabled: true,
+        renderModal: (modalProps) => <LinkSafetyModal {...modalProps} />
+      }}
       {...props}
     />
   ),

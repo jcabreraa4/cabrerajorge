@@ -51,6 +51,7 @@ export const deleteById = mutation({
     if (!file) throw new ConvexError('Not found');
     const isOwner = file.owner === user.subject;
     if (!isOwner) throw new ConvexError('Unauthorized');
+    await ctx.storage.delete(file.storage);
     await ctx.db.delete(args.id);
   }
 });

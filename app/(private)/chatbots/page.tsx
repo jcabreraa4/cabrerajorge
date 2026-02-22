@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { PromptInput, PromptInputBody, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from '@/components/ui/prompt-input';
 import { models, type ModelId } from '@/lib/chatbot/models';
-import { GlobeIcon, Plus, Wrench } from 'lucide-react';
+import { GlobeIcon, PlusIcon, WrenchIcon } from 'lucide-react';
 import { ChatMessages } from '@/components/chatbots/chat-messages';
 import { ChatSuggestions } from '@/components/chatbots/chat-suggestions';
 import { AttachedFiles } from '@/components/chatbots/attached-files';
@@ -81,7 +81,7 @@ export default function Page() {
                 className="cursor-pointer"
               >
                 <label htmlFor="file-upload">
-                  <Plus size={16} />
+                  <PlusIcon size={16} />
                 </label>
               </PromptInputButton>
               <input
@@ -95,7 +95,7 @@ export default function Page() {
                 variant={selectedModel?.useTools ? 'default' : 'outline'}
                 className={`hidden xl:flex cursor-pointer ${selectedModel?.useTools ? 'hover:bg-primary' : 'hover:bg-transparent text-black dark:text-white'}`}
               >
-                <Wrench size={16} />
+                <WrenchIcon size={16} />
                 Tool Calling
               </PromptInputButton>
               <PromptInputButton

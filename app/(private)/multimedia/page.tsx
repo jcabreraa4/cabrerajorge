@@ -68,10 +68,10 @@ export default function Page() {
           <Empty>
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <ImageIcon />
+                <ImageIcon className="size-6" />
               </EmptyMedia>
-              <EmptyTitle>No Multimedia Available</EmptyTitle>
-              <EmptyDescription>You haven&apos;t uploaded any files yet. Get started by uploading your first file.</EmptyDescription>
+              <EmptyTitle className="text-xl">No Multimedia Available</EmptyTitle>
+              <EmptyDescription className="text-md">You haven&apos;t uploaded any files yet. Get started by uploading your first file.</EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
               <UploadDialog className="min-w-50" />

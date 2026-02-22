@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Conversation, ConversationContent, ConversationScrollButton } from '@/components/ui/conversation';
+import { Conversation, ConversationContent, ConversationEmptyState, ConversationScrollButton } from '@/components/ui/conversation';
 import { Source, Sources, SourcesContent, SourcesTrigger } from '@/components/ui/sources';
 import { Message, MessageAction, MessageActions, MessageContent, MessageResponse } from '@/components/ui/message';
 import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ui/reasoning';
@@ -7,7 +7,11 @@ import { OpenIn, OpenInChatGPT, OpenInClaude, OpenInContent, OpenInT3, OpenInTri
 import { Attachment, AttachmentPreview, AttachmentRemove, Attachments, type AttachmentData } from '@/components/ui/attachments';
 import { toast } from 'sonner';
 import type { ChatMessage } from '@/app/api/chat/route';
-import { CopyIcon, Loader2Icon, RefreshCcwIcon } from 'lucide-react';
+import { CopyIcon, DownloadIcon, ImageIcon, Loader2Icon, MessageSquareIcon, RefreshCcwIcon, SaveIcon } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import Image from 'next/image';
+import { useUser } from '@clerk/nextjs';
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '../ui/empty';
 
 interface ChatMessagesProps {
   messages: ChatMessage[];
@@ -17,6 +21,8 @@ interface ChatMessagesProps {
 }
 
 export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMessagesProps) {
+  const { user, isLoaded } = useUser();
+
   function copyMessage(message: string) {
     navigator.clipboard.writeText(message);
     toast.success('Message copied to clipboard successfully.');
@@ -25,29 +31,41 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
   return (
     <Conversation>
       <ConversationContent>
+        {messages.length === 0 && (
+          <ConversationEmptyState className="mt-40">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <MessageSquareIcon className="size-6" />
+                </EmptyMedia>
+                <EmptyTitle className="text-xl">No Messages Yet</EmptyTitle>
+                {isLoaded && <EmptyDescription className="text-md">How can I help you today, {user?.firstName}?</EmptyDescription>}
+              </EmptyHeader>
+            </Empty>
+          </ConversationEmptyState>
+        )}
         {messages.map((message, messageIndex) => {
           const isLastMessage = messageIndex === messages.length - 1;
           const fileParts = message.parts.filter((part) => part.type === 'file');
+          const sourceParts = message.parts.filter((part) => part.type === 'source-url');
 
           return (
             <Fragment key={message.id}>
-              {message.role === 'assistant' && message.parts.filter((part) => part.type === 'source-url').length > 0 && (
+              {message.role === 'assistant' && sourceParts.length > 0 && (
                 <Sources className="my-0">
                   <SourcesTrigger
-                    count={message.parts.filter((part) => part.type === 'source-url').length}
+                    count={sourceParts.length}
                     className="cursor-pointer"
                   />
-                  {message.parts
-                    .filter((part) => part.type === 'source-url')
-                    .map((part, i) => (
-                      <SourcesContent key={`${message.id}-${i}`}>
-                        <Source
-                          key={`${message.id}-${i}`}
-                          href={part.url}
-                          title={part.url}
-                        />
-                      </SourcesContent>
-                    ))}
+                  {sourceParts.map((part, i) => (
+                    <SourcesContent key={`${message.id}-${i}`}>
+                      <Source
+                        key={`${message.id}-${i}`}
+                        href={part.url}
+                        title={part.url}
+                      />
+                    </SourcesContent>
+                  ))}
                 </Sources>
               )}
               {message.parts.map((part, partIndex) => {
@@ -56,7 +74,7 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                     <Fragment key={`${message.id}-${partIndex}`}>
                       <Message from={message.role}>
                         {message.role === 'user' && fileParts.length > 0 && (
-                          <Attachments variant="grid">
+                          <Attachments variant="inline">
                             {fileParts.map((file, fileIndex) => {
                               const attachmentData: AttachmentData = {
                                 ...file,
@@ -119,6 +137,64 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                       <ReasoningTrigger />
                       <ReasoningContent>{part.text}</ReasoningContent>
                     </Reasoning>
+                  );
+                } else if (part.type === 'tool-generateImage') {
+                  return (
+                    <Fragment key={`${message.id}-${partIndex}`}>
+                      <Message
+                        from={message.role}
+                        className="flex flex-col gap-5 items-start"
+                      >
+                        {part.state != 'output-available' ? (
+                          <div className="bg-gray-200 animate-pulse size-50 lg:size-75 xl:size-100 rounded-lg flex gap-2 items-center justify-center">
+                            <ImageIcon size={30} />
+                            <Label className="text-xl">Generating Image...</Label>
+                          </div>
+                        ) : (
+                          part.output?.status === 200 && (
+                            <div className="relative size-50 lg:size-75 xl:size-100 rounded-lg overflow-hidden">
+                              <Image
+                                fill
+                                alt="Image"
+                                src={`data:image/png;base64,${part.output.image}`}
+                              />
+                            </div>
+                          )
+                        )}
+                      </Message>
+                      {part.state === 'output-available' && part.output?.status === 200 && (
+                        <MessageActions>
+                          <MessageAction
+                            label="Copy"
+                            className="cursor-pointer"
+                            onClick={() => {}}
+                          >
+                            <CopyIcon className="size-3" />
+                          </MessageAction>
+                          <MessageAction
+                            label="Save"
+                            className="cursor-pointer"
+                            onClick={() => {}}
+                          >
+                            <SaveIcon className="size-3" />
+                          </MessageAction>
+                          <MessageAction
+                            label="Download"
+                            className="cursor-pointer"
+                            onClick={() => {}}
+                          >
+                            <DownloadIcon className="size-3" />
+                          </MessageAction>
+                          <OpenIn query={'Generate an image with the following prompt: ' + part.output.prompt!}>
+                            <OpenInTrigger />
+                            <OpenInContent>
+                              <OpenInChatGPT />
+                              <OpenInClaude />
+                            </OpenInContent>
+                          </OpenIn>
+                        </MessageActions>
+                      )}
+                    </Fragment>
                   );
                 }
               })}
