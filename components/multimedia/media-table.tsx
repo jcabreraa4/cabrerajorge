@@ -1,5 +1,5 @@
 import { sizeToText } from '@/utils/size-to-text';
-import { FileTextIcon, ImageIcon, MusicIcon, VideoIcon } from 'lucide-react';
+import { FileTextIcon, HeadphonesIcon, ImageIcon, VideoIcon } from 'lucide-react';
 import { MediaPreview } from './media-preview';
 import { MediaFile } from '@/convex/schema';
 import { useChatHelperStore } from '@/store/helper-store';
@@ -18,7 +18,7 @@ function MediaFileInfo({ name, size, type }: MediaFileInfoProps) {
   return (
     <div className="h-13 overflow-hidden flex flex-col gap-1">
       <div className="flex items-center">
-        <div className="min-w-8">{type.startsWith('image') ? <ImageIcon /> : type.startsWith('video') ? <VideoIcon /> : type.startsWith('audio') ? <MusicIcon /> : <FileTextIcon />}</div>
+        <div className="min-w-8">{type.startsWith('image') ? <ImageIcon /> : type.startsWith('video') ? <VideoIcon /> : type.startsWith('audio') ? <HeadphonesIcon /> : <FileTextIcon />}</div>
         <p className="font-semibold text-lg truncate">{name}</p>
       </div>
       <p className="text-sm text-gray-500">{sizeToText(size)}</p>

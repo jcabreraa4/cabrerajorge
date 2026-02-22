@@ -18,7 +18,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           <div className="flex flex-1 min-h-0 overflow-hidden pt-1 px-3 lg:px-4">
             <Suspense>{children}</Suspense>
           </div>
-          <AppChatbot className="hidden 2xl:flex" />
+          <AppChatbot className="hidden 2xl:flex pe-4" />
         </div>
       </SidebarInset>
     </SidebarProvider>

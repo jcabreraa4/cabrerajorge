@@ -13,7 +13,7 @@ export const getAll = query({
   }
 });
 
-export const generateUpload = mutation({
+export const generateUrl = mutation({
   handler: async (ctx) => {
     const user = await ctx.auth.getUserIdentity();
     if (!user) throw new ConvexError('Unauthorized');
@@ -21,7 +21,7 @@ export const generateUpload = mutation({
   }
 });
 
-export const saveUpload = mutation({
+export const create = mutation({
   args: {
     name: v.string(),
     type: v.string(),

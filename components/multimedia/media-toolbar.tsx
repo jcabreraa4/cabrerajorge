@@ -92,10 +92,12 @@ function UpdateDialog({ file }: { file: MediaFile }) {
         <DialogFooter>
           <Button
             className="flex-1 cursor-pointer"
-            onClick={() => {
-              updateFile({ id: file._id, name: name });
-              setOpen(false);
-            }}
+            onClick={() =>
+              updateFile({ id: file._id, name: name }).finally(() => {
+                toast.success('File information updated successfully.');
+                setOpen(false);
+              })
+            }
           >
             <SaveIcon />
             Update File
@@ -122,7 +124,7 @@ export function MediaToolbar({ file }: { file: UrlMediaFile }) {
   const sectionButtons = [
     {
       icon: Star,
-      onClick: () => updateFile({ id: file._id, starred: !file.starred }),
+      onClick: () => updateFile({ id: file._id, starred: !file.starred }).finally(() => toast.success(file.starred ? 'File removed from starred successfully.' : 'File added to starred successfully.')),
       isActive: file.starred
     },
     {

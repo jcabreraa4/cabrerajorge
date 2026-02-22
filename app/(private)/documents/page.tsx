@@ -34,7 +34,7 @@ export default function Page() {
           </InputGroupAddon>
         </InputGroup>
         <CreateButton
-          variant="secondary"
+          variant="outline"
           className="min-w-50"
         />
       </section>

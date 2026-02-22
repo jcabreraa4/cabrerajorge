@@ -27,8 +27,8 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  const generateUploadUrl = useMutation(api.multimedia.generateUpload);
-  const saveUpload = useMutation(api.multimedia.saveUpload);
+  const generateUrl = useMutation(api.multimedia.generateUrl);
+  const fileUpload = useMutation(api.multimedia.create);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 1,
@@ -46,35 +46,23 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
   }
 
   async function uploadFile(selectedFile: File) {
-    const isValidType = validTypes.some((validType) => selectedFile.type.includes(validType));
-    if (!isValidType) {
-      toast.error('Invalid file type. Only images, videos or pdfs are allowed.');
-      return;
-    }
-
+    const contentType = selectedFile.type || 'application/octet-stream';
     setIsUploading(true);
-
     try {
-      const postUrl = await generateUploadUrl();
+      const postUrl = await generateUrl();
       const result = await fetch(postUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': selectedFile.type || 'application/octet-stream'
-        },
+        headers: { 'Content-Type': contentType },
         body: selectedFile
       });
-      const json = await result.json();
-      if (!result.ok || !json.storageId) {
-        throw new Error('Upload failed.');
-      }
-
-      await saveUpload({
+      const { storageId } = await result.json();
+      if (!result.ok || !storageId) throw new Error('Upload failed.');
+      await fileUpload({
         name: selectedFile.name,
-        type: selectedFile.type || 'application/octet-stream',
+        type: contentType,
         size: selectedFile.size,
-        storage: json.storageId
+        storage: storageId
       });
-
       toast.success('File uploaded successfully.');
       resetDialog();
     } catch (error) {
@@ -106,8 +94,8 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Upload File</DialogTitle>
-          <DialogDescription className="lg:hidden">Upload images, videos or pdfs.</DialogDescription>
-          <DialogDescription className="hidden lg:block">You can upload images, videos or pdfs.</DialogDescription>
+          <DialogDescription className="lg:hidden">Images, videos, audios or pdfs.</DialogDescription>
+          <DialogDescription className="hidden lg:block">Upload images, videos, audios or pdfs.</DialogDescription>
         </DialogHeader>
         {file ? (
           <div className="space-y-4">

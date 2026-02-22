@@ -2,7 +2,7 @@
 
 import { useAuth } from '@clerk/nextjs';
 import { useQuery } from 'convex/react';
-import { FileTextIcon, SearchIcon } from 'lucide-react';
+import { ImageIcon, SearchIcon } from 'lucide-react';
 import { MediaTable } from '@/components/multimedia/media-table';
 import { UploadDialog } from '@/components/multimedia/upload-dialog';
 import { CircleLoader } from '@/components/page-loaders';
@@ -68,10 +68,10 @@ export default function Page() {
           <Empty>
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <FileTextIcon />
+                <ImageIcon />
               </EmptyMedia>
-              <EmptyTitle>No Documents Available</EmptyTitle>
-              <EmptyDescription>You haven&apos;t created any documents yet. Get started by creating your first document.</EmptyDescription>
+              <EmptyTitle>No Multimedia Available</EmptyTitle>
+              <EmptyDescription>You haven&apos;t uploaded any files yet. Get started by uploading your first file.</EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
               <UploadDialog className="min-w-50" />
