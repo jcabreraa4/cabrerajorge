@@ -9,6 +9,7 @@
  */
 
 import type * as documents from "../documents.js";
+import type * as editor from "../editor.js";
 import type * as multimedia from "../multimedia.js";
 import type * as prosemirror from "../prosemirror.js";
 
@@ -20,6 +21,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   documents: typeof documents;
+  editor: typeof editor;
   multimedia: typeof multimedia;
   prosemirror: typeof prosemirror;
 }>;

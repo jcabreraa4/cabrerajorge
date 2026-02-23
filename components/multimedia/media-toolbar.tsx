@@ -12,6 +12,7 @@ import { MediaDisplay } from '@/components/media-display';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { MediaFile } from '@/convex/schema';
+import { Textarea } from '../ui/textarea';
 
 interface SectionButtonProps {
   onClick: () => void;
@@ -60,7 +61,7 @@ function SectionButton({ onClick, icon: Icon, isActive }: SectionButtonProps) {
 
 function UpdateDialog({ file }: { file: MediaFile }) {
   const [open, setOpen] = useState<boolean>(false);
-  const [name, setName] = useState<string>('');
+  const [info, setInfo] = useState({ name: file.name, note: file.note });
 
   const deleteFile = useMutation(api.multimedia.deleteById);
   const updateFile = useMutation(api.multimedia.updateById);
@@ -72,7 +73,7 @@ function UpdateDialog({ file }: { file: MediaFile }) {
     >
       <DialogTrigger asChild>
         <SectionButton
-          onClick={() => setName(file.name)}
+          onClick={() => {}}
           icon={PenIcon}
         />
       </DialogTrigger>
@@ -85,15 +86,23 @@ function UpdateDialog({ file }: { file: MediaFile }) {
           <Label htmlFor="name">Name</Label>
           <Input
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={info.name}
+            onChange={(e) => setInfo({ ...info, name: e.target.value })}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="name">Note</Label>
+          <Textarea
+            id="name"
+            value={info.note}
+            onChange={(e) => setInfo({ ...info, note: e.target.value })}
           />
         </div>
         <DialogFooter>
           <Button
             className="flex-1 cursor-pointer"
             onClick={() =>
-              updateFile({ id: file._id, name: name }).finally(() => {
+              updateFile({ id: file._id, name: info.name, note: info.note }).finally(() => {
                 toast.success('File updated successfully.');
                 setOpen(false);
               })

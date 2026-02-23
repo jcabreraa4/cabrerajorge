@@ -59,7 +59,7 @@ export function EditorPaper({ paperId }: { paperId: Id<'documents'> }) {
       },
       extensions: [
         StarterKit.configure({
-          heading: false
+          link: false
         }),
         TextStyleKit,
         ImageResize,

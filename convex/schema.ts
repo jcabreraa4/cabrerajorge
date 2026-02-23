@@ -10,6 +10,7 @@ export default defineSchema({
   }).index('by_owner', ['owner']),
   multimedia: defineTable({
     name: v.string(),
+    note: v.string(),
     type: v.string(),
     size: v.number(),
     starred: v.boolean(),

@@ -33,6 +33,7 @@ export const create = mutation({
     if (!user) throw new ConvexError('Unauthorized');
     return await ctx.db.insert('multimedia', {
       name: args.name,
+      note: '',
       type: args.type,
       size: args.size,
       storage: args.storage,
@@ -60,6 +61,7 @@ export const updateById = mutation({
   args: {
     id: v.id('multimedia'),
     name: v.optional(v.string()),
+    note: v.optional(v.string()),
     starred: v.optional(v.boolean())
   },
   handler: async (ctx, args) => {
@@ -71,6 +73,7 @@ export const updateById = mutation({
     if (!isOwner) throw new ConvexError('Unauthorized');
     await ctx.db.patch(args.id, {
       ...(args.name !== undefined ? { name: args.name } : {}),
+      ...(args.note !== undefined ? { note: args.note } : {}),
       ...(args.starred !== undefined ? { starred: args.starred } : {})
     });
   }

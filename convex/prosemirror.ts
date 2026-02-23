@@ -4,7 +4,7 @@ import { components } from './_generated/api';
 import { MutationCtx, QueryCtx } from './_generated/server';
 import { Id, DataModel } from './_generated/dataModel';
 
-const prosemirrorSync = new ProsemirrorSync((components as any).prosemirrorSync);
+export const prosemirrorSync = new ProsemirrorSync((components as any).prosemirrorSync);
 
 async function requireOwner(ctx: QueryCtx | MutationCtx, documentId: string) {
   const user = await ctx.auth.getUserIdentity();

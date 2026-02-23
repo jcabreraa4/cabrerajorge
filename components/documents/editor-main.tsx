@@ -1,7 +1,7 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { DesktopToolbar } from '@/components/documents/desktop-toolbar';
-import { EditorPaper } from '@/components/documents/editor-paper';
 import { api } from '@/convex/_generated/api';
 import { Preloaded } from 'convex/react';
 import { useEditor } from '@/hooks/use-editor';
@@ -9,6 +9,8 @@ import { MobileToolbar } from './mobile-toolbar';
 import { Button } from '../ui/button';
 import { FileTextIcon } from 'lucide-react';
 import Link from 'next/link';
+
+const EditorPaper = dynamic(() => import('@/components/documents/editor-paper').then((m) => ({ default: m.EditorPaper })), { ssr: false });
 
 export function EditorMain({ preloadedDocument }: { preloadedDocument: Preloaded<typeof api.documents.getById> }) {
   const { document } = useEditor(preloadedDocument);

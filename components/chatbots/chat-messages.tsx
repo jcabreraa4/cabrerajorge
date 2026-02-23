@@ -1,17 +1,19 @@
 import { Fragment } from 'react';
+import { useUser } from '@clerk/nextjs';
+import Image from 'next/image';
+import { toast } from 'sonner';
+import type { ChatMessage } from '@/app/api/chat/route';
+import { CopyIcon, DownloadIcon, ImageIcon, Loader2Icon, MessageSquareIcon, RefreshCcwIcon, SaveIcon } from 'lucide-react';
 import { Conversation, ConversationContent, ConversationEmptyState, ConversationScrollButton } from '@/components/ui/conversation';
 import { Source, Sources, SourcesContent, SourcesTrigger } from '@/components/ui/sources';
 import { Message, MessageAction, MessageActions, MessageContent, MessageResponse } from '@/components/ui/message';
 import { Reasoning, ReasoningContent, ReasoningTrigger } from '@/components/ui/reasoning';
 import { OpenIn, OpenInChatGPT, OpenInClaude, OpenInContent, OpenInT3, OpenInTrigger } from '@/components/ui/open-in-chat';
 import { Attachment, AttachmentPreview, AttachmentRemove, Attachments, type AttachmentData } from '@/components/ui/attachments';
-import { toast } from 'sonner';
-import type { ChatMessage } from '@/app/api/chat/route';
-import { CopyIcon, DownloadIcon, ImageIcon, Loader2Icon, MessageSquareIcon, RefreshCcwIcon, SaveIcon } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import Image from 'next/image';
-import { useUser } from '@clerk/nextjs';
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '../ui/empty';
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
+import { Tool, ToolContent, ToolHeader, ToolInput, ToolOutput } from '@/components/ui/tool';
+import { CodeBlock } from '@/components/ui/code-block';
 
 interface ChatMessagesProps {
   messages: ChatMessage[];
@@ -195,6 +197,30 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                         </MessageActions>
                       )}
                     </Fragment>
+                  );
+                } else if (part.type === 'tool-loadAllDocuments' || part.type === 'tool-loadOneDocument' || part.type === 'tool-updateDocumentContent' || part.type === 'tool-updateDocumentTitle' || part.type === 'tool-loadAllMultimedia') {
+                  return (
+                    <Tool key={`${message.id}-${partIndex}`}>
+                      <ToolHeader
+                        type={part.type}
+                        state={part.state}
+                        className="cursor-pointer"
+                      />
+                      <ToolContent>
+                        <ToolInput input={part.input} />
+                        {part.state === 'output-available' && (
+                          <ToolOutput
+                            output={
+                              <CodeBlock
+                                code={JSON.stringify(part.output, null, 2)}
+                                language="json"
+                              />
+                            }
+                            errorText={part.errorText}
+                          />
+                        )}
+                      </ToolContent>
+                    </Tool>
                   );
                 }
               })}
