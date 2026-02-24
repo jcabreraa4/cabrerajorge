@@ -2,11 +2,20 @@
 
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
-import { BotIcon, FileTextIcon, ImageIcon, LayoutDashboardIcon } from 'lucide-react';
+import { BotIcon, FileTextIcon, ImageIcon, LayoutDashboardIcon, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const sections = [
+type Section = {
+  title: string;
+  items: {
+    title: string;
+    url: string;
+    icon: LucideIcon;
+  }[];
+};
+
+const sections: Section[] = [
   {
     title: 'Dashboard',
     items: [

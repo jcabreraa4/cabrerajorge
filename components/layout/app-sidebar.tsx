@@ -18,7 +18,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
       {...props}
     >
       <SidebarHeader>
-        <NavUser user={userData} />
+        <NavUser {...userData} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain />

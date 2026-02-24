@@ -9,14 +9,12 @@ import { dark } from '@clerk/themes';
 import { useTheme } from 'next-themes';
 
 interface NavUserProps {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
+  name: string;
+  email: string;
+  avatar: string;
 }
 
-export function NavUser({ user }: NavUserProps) {
+export function NavUser({ name, email, avatar }: NavUserProps) {
   const { isMobile } = useSidebar();
   const { signOut, openUserProfile } = useClerk();
   const { theme, setTheme } = useTheme();
@@ -32,14 +30,14 @@ export function NavUser({ user }: NavUserProps) {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
-                  src={user.avatar}
-                  alt={user.name}
+                  src={avatar}
+                  alt={name}
                 />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">{name}</span>
+                <span className="truncate text-xs">{email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -54,14 +52,14 @@ export function NavUser({ user }: NavUserProps) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={user.avatar}
-                    alt={user.name}
+                    src={avatar}
+                    alt={name}
                   />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">{name}</span>
+                  <span className="truncate text-xs">{email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
