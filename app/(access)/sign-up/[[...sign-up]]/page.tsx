@@ -8,6 +8,7 @@ export default function Page() {
   const { theme } = useTheme();
   return (
     <SignUp
+      forceRedirectUrl="/overview"
       appearance={{
         theme: theme === 'dark' ? dark : undefined
       }}
