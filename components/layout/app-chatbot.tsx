@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { PromptInput, PromptInputBody, PromptInputButton, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from '@/components/ui/prompt-input';
-import type { ChatMessage } from '@/app/api/chat/route';
 import { GlobeIcon, PlusIcon, WrenchIcon } from 'lucide-react';
 import { ChatMessages } from '@/components/chatbots/chat-messages';
 import { useChatHelperStore } from '@/store/helper-store';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { AttachedFiles } from '@/components/chatbots/attached-files';
 import { ModelsDialog } from '@/components/chatbots/models-dialog';
-import { cn } from '@/lib/utils';
+import type { ChatMessage } from '@/app/api/chat/route';
 import { models, type ModelId } from '@/lib/chatbot/models';
+import { cn } from '@/lib/utils';
 
 const chatbotPage = 'baldomero';
 
@@ -19,7 +19,6 @@ export function AppChatbot({ className }: { className?: string }) {
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
 
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const segments = pathname.split('/').filter(Boolean);
 
   const show = useChatHelperStore((state) => state.show);
@@ -33,13 +32,10 @@ export function AppChatbot({ className }: { className?: string }) {
 
   const selectedModel = models.find((m) => m.id === chatModel);
 
-  const fullPath = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-  const information = `The user location within the app is ${fullPath} so maybe he is asking for something related to that.`;
-
   function handleSubmit() {
     const dt = new DataTransfer();
     files.forEach((file) => dt.items.add(file));
-    sendMessage({ text: input, files: dt.files }, { body: { model: chatModel, information } });
+    sendMessage({ text: input, files: dt.files }, { body: { model: chatModel } });
     setLastInput(input);
     setInput('');
     setFiles([]);
