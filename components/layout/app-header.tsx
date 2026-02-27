@@ -9,6 +9,8 @@ import { BotIcon } from 'lucide-react';
 import { useChatHelperStore } from '@/store/helper-store';
 import Link from 'next/link';
 
+const chatbotPage = 'baldomero';
+
 function capitalize(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
@@ -17,7 +19,7 @@ export function AppHeader() {
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean);
   const section = segments[0] ? capitalize(segments[0]) : '';
-  const hideChatbot = section === 'Chatbots';
+  const hideChatbot = segments[0] === chatbotPage;
 
   const show = useChatHelperStore((state) => state.show);
   const toggleShow = useChatHelperStore((state) => state.toggleShow);

@@ -95,6 +95,7 @@ function UpdateDialog({ file }: { file: MediaFile }) {
           <Textarea
             id="name"
             value={info.note}
+            className="h-20"
             onChange={(e) => setInfo({ ...info, note: e.target.value })}
           />
         </div>

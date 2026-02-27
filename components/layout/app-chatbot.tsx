@@ -13,6 +13,8 @@ import { ModelsDialog } from '@/components/chatbots/models-dialog';
 import { cn } from '@/lib/utils';
 import { models, type ModelId } from '@/lib/chatbot/models';
 
+const chatbotPage = 'baldomero';
+
 export function AppChatbot({ className }: { className?: string }) {
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
 
@@ -21,7 +23,7 @@ export function AppChatbot({ className }: { className?: string }) {
   const segments = pathname.split('/').filter(Boolean);
 
   const show = useChatHelperStore((state) => state.show);
-  const isChatbotPage = segments[0] === 'chatbots';
+  const isChatbotPage = segments[0] === chatbotPage;
 
   const [input, setInput] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
@@ -69,7 +71,7 @@ export function AppChatbot({ className }: { className?: string }) {
         globalDrop
         multiple
         onSubmit={handleSubmit}
-        className="w-full max-w-200 mt-2 px-4"
+        className="w-full max-w-200 px-4"
       >
         <PromptInputBody>
           <PromptInputTextarea

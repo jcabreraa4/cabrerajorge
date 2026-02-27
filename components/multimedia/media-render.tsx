@@ -71,7 +71,7 @@ export function AudioRender({ src, interact = false, className }: AudioRenderPro
             <HeadphonesIcon className="size-6 lg:size-8" />
             <p className="text-lg lg:text-2xl font-semibold">Audio File</p>
           </div>
-          <div className="w-full px-2">
+          <div className="w-full px-2 pb-2">
             <audio
               controls
               src={src}

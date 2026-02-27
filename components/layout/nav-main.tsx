@@ -25,8 +25,8 @@ const sections: Section[] = [
         icon: LayoutDashboardIcon
       },
       {
-        title: 'Chatbots',
-        url: '/chatbots',
+        title: 'Baldomero',
+        url: '/baldomero',
         icon: BotIcon
       }
     ]
