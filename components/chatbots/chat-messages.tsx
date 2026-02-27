@@ -34,7 +34,7 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
     <Conversation>
       <ConversationContent>
         {messages.length === 0 && (
-          <ConversationEmptyState className="mt-40">
+          <ConversationEmptyState className="xl:mt-40">
             <Empty>
               <EmptyHeader>
                 <EmptyMedia variant="icon">
@@ -96,7 +96,7 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                           </Attachments>
                         )}
                         {part.text.trim() && (
-                          <MessageContent className="text-lg">
+                          <MessageContent className="text-md xl:text-lg">
                             <MessageResponse>{part.text}</MessageResponse>
                           </MessageContent>
                         )}
