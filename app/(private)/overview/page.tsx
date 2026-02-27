@@ -15,7 +15,7 @@ export default function Page() {
       <Card className="flex-1">
         <CardHeader>
           <CardTitle className="text-2xl md:text-3xl">Welcome back{isLoaded && `, ${session!.user.firstName}`}</CardTitle>
-          <CardDescription>Here&apos;s a quick overview of your storage and recent activity</CardDescription>
+          <CardDescription>Check your documents and multimedia. Or just ask AI!</CardDescription>
         </CardHeader>
         <CardFooter className="gap-3">
           <CardAction className="hidden xl:block">

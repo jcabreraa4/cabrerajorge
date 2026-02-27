@@ -103,7 +103,7 @@ export function EditorPaper({ paperId }: { paperId: Id<'documents'> }) {
 
   return (
     <div className="w-full flex-1 overflow-y-scroll">
-      <div className="rounded-lg w-full max-w-204 mx-auto my-4 px-4 md:px-0 bg-white">
+      <div className="rounded-lg w-full max-w-204 mx-auto py-2 lg:py-0 lg:my-4 px-2 lg:px-0 bg-white">
         <EditorContent
           editor={editor}
           className="w-full dark:text-black"
