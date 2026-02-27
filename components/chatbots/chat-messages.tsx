@@ -96,7 +96,7 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                           </Attachments>
                         )}
                         {part.text.trim() && (
-                          <MessageContent>
+                          <MessageContent className="text-lg">
                             <MessageResponse>{part.text}</MessageResponse>
                           </MessageContent>
                         )}
@@ -108,14 +108,14 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                             className="cursor-pointer"
                             onClick={() => regenerate()}
                           >
-                            <RefreshCcwIcon className="size-3" />
+                            <RefreshCcwIcon />
                           </MessageAction>
                           <MessageAction
                             label="Copy"
                             className="cursor-pointer"
                             onClick={() => copyMessage(part.text)}
                           >
-                            <CopyIcon className="size-3" />
+                            <CopyIcon />
                           </MessageAction>
                           <OpenIn query={lastInput}>
                             <OpenInTrigger />

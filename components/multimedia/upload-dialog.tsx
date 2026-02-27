@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { api } from '@/convex/_generated/api';
 import { cn } from '@/lib/utils';
 import { sizeToText } from '@/utils/size-to-text';
-import { MediaPreview } from './media-preview';
+import { MediaPreview } from '@/components/multimedia/media-preview';
 
 const validTypes = ['image', 'video', 'pdf', 'audio'];
 

@@ -12,13 +12,13 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <SidebarInset className="h-svh overflow-hidden pb-3 lg:pb-4">
+      <SidebarInset className="h-svh overflow-hidden">
         <AppHeader />
         <div className="flex flex-1 min-h-0 overflow-hidden">
-          <div className="flex flex-1 min-h-0 overflow-hidden pt-1 px-3 lg:px-4">
+          <div className="flex flex-1 min-h-0 overflow-hidden p-3 xl:p-4">
             <Suspense>{children}</Suspense>
           </div>
-          <AppChatbot className="hidden 2xl:flex pe-4" />
+          <AppChatbot className="hidden 2xl:flex" />
         </div>
       </SidebarInset>
     </SidebarProvider>

@@ -46,9 +46,9 @@ export function AppChatbot({ className }: { className?: string }) {
   if (!show || isChatbotPage) return null;
 
   return (
-    <section className={cn('h-full w-120 flex flex-col gap-1 items-center print:hidden', className)}>
-      <div className="flex-1 min-h-0 w-full overflow-y-scroll flex justify-center">
-        <div className="w-full max-w-200">
+    <section className={cn('h-full w-120 flex flex-col gap-2 items-center print:hidden border-l py-4', className)}>
+      <div className="flex flex-1 min-h-0 w-full overflow-y-scroll justify-center">
+        <div className="w-full">
           <ChatMessages
             messages={messages}
             status={status}
@@ -57,17 +57,19 @@ export function AppChatbot({ className }: { className?: string }) {
           />
         </div>
       </div>
-      {files.length !== 0 && (
-        <AttachedFiles
-          files={files}
-          setFiles={setFiles}
-        />
-      )}
+      <div className="w-full px-4">
+        {files.length !== 0 && (
+          <AttachedFiles
+            files={files}
+            setFiles={setFiles}
+          />
+        )}
+      </div>
       <PromptInput
         globalDrop
         multiple
         onSubmit={handleSubmit}
-        className="w-full max-w-200 mt-2"
+        className="w-full max-w-200 mt-2 px-4"
       >
         <PromptInputBody>
           <PromptInputTextarea

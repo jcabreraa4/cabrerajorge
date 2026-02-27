@@ -233,7 +233,7 @@ export const OpenInTrigger = ({ children, ...props }: OpenInTriggerProps) => (
         label="Open"
         className="cursor-pointer"
       >
-        <ExternalLinkIcon className="size-3" />
+        <ExternalLinkIcon />
       </MessageAction>
     )}
   </DropdownMenuTrigger>

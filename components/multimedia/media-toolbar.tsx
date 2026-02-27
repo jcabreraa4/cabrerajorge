@@ -1,18 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Download, LucideIcon, PenIcon, Save, SaveIcon, Star, Trash, TrashIcon } from 'lucide-react';
+import { Copy, Download, ExpandIcon, LucideIcon, PenIcon, SaveIcon, Star, TrashIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Label } from '@/components/ui/label';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { MediaDisplay } from '@/components/media-display';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { MediaFile } from '@/convex/schema';
-import { Textarea } from '../ui/textarea';
+import { Textarea } from '@/components/ui/textarea';
+import { useRouter } from 'next/navigation';
 
 interface SectionButtonProps {
   onClick: () => void;
@@ -130,6 +130,7 @@ function UpdateDialog({ file }: { file: MediaFile }) {
 }
 
 export function MediaToolbar({ file }: { file: UrlMediaFile }) {
+  const router = useRouter();
   const updateFile = useMutation(api.multimedia.updateById);
 
   const sectionButtons = [
@@ -157,10 +158,9 @@ export function MediaToolbar({ file }: { file: UrlMediaFile }) {
         />
       ))}
       <UpdateDialog file={file} />
-      <MediaDisplay
-        src={file.url!}
-        type={file.type}
-        className="hidden lg:block"
+      <SectionButton
+        icon={ExpandIcon}
+        onClick={() => router.push(`/multimedia/${file._id}`)}
       />
     </div>
   );

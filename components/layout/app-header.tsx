@@ -19,10 +19,11 @@ export function AppHeader() {
   const section = segments[0] ? capitalize(segments[0]) : '';
   const hideChatbot = section === 'Chatbots';
 
+  const show = useChatHelperStore((state) => state.show);
   const toggleShow = useChatHelperStore((state) => state.toggleShow);
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 print:hidden justify-between px-3 lg:px-4">
+    <header className="flex h-16 bg-sidebar shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 print:hidden justify-between px-3 lg:px-4 border-b">
       <div className="flex items-center gap-1">
         <SidebarTrigger className="-ml-1 cursor-pointer" />
         <Separator
@@ -41,7 +42,7 @@ export function AppHeader() {
       </div>
       {!hideChatbot && (
         <Button
-          variant="outline"
+          variant={show ? 'default' : 'outline'}
           className="cursor-pointer hidden 2xl:block"
           onClick={toggleShow}
         >

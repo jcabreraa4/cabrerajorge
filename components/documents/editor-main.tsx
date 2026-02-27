@@ -32,7 +32,7 @@ export function EditorMain({ preloadedDocument }: { preloadedDocument: Preloaded
     );
 
   return (
-    <section className="w-full flex flex-col gap-3">
+    <main className="w-full flex flex-col gap-3">
       <DesktopToolbar
         document={document}
         className="hidden xl:flex"
@@ -42,6 +42,6 @@ export function EditorMain({ preloadedDocument }: { preloadedDocument: Preloaded
         className="xl:hidden"
       />
       <EditorPaper paperId={document._id} />
-    </section>
+    </main>
   );
 }

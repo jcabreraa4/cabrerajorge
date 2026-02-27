@@ -1,5 +1,6 @@
 import { ConvexError, v } from 'convex/values';
 import { mutation, query } from './_generated/server';
+import { Id } from './_generated/dataModel';
 
 export const getAll = query({
   handler: async (ctx) => {
@@ -10,6 +11,24 @@ export const getAll = query({
       .withIndex('by_owner', (q) => q.eq('owner', user.subject))
       .collect();
     return await Promise.all(multimedia.map(async (file) => ({ ...file, url: await ctx.storage.getUrl(file.storage) })));
+  }
+});
+
+export const getById = query({
+  args: { id: v.string() },
+  handler: async (ctx, args) => {
+    try {
+      const user = await ctx.auth.getUserIdentity();
+      if (!user) throw new ConvexError('Unauthorized');
+      const file = await ctx.db.get(args.id as Id<'multimedia'>);
+      if (!file) return null;
+      if (file.owner !== user.subject) return null;
+      const url = await ctx.storage.getUrl(file.storage);
+      if (!url) return null;
+      return { ...file, url };
+    } catch {
+      return null;
+    }
   }
 });
 

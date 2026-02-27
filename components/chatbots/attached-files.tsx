@@ -1,7 +1,7 @@
 import { TrashIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Suggestions } from '@/components/ui/suggestion';
-import { MediaDisplay } from '@/components/media-display';
+import { MediaDisplay } from '@/components/chatbots/media-display';
 
 interface AttachedFilesProps {
   files: File[];

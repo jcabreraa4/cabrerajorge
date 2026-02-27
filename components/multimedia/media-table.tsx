@@ -1,30 +1,11 @@
-import { sizeToText } from '@/utils/size-to-text';
-import { FileTextIcon, HeadphonesIcon, ImageIcon, VideoIcon } from 'lucide-react';
-import { MediaPreview } from './media-preview';
+import { MediaPreview } from '@/components/multimedia/media-preview';
 import { MediaFile } from '@/convex/schema';
 import { useChatHelperStore } from '@/store/helper-store';
+import { MediaToolbar } from '@/components/multimedia/media-toolbar';
+import { MediaInfo } from '@/components/multimedia/media-info';
 import { cn } from '@/lib/utils';
-import { MediaToolbar } from './media-toolbar';
-
-interface MediaFileInfoProps {
-  name: string;
-  size: number;
-  type: string;
-}
 
 type UrlMediaFile = MediaFile & { url: string | null };
-
-function MediaFileInfo({ name, size, type }: MediaFileInfoProps) {
-  return (
-    <div className="h-13 overflow-hidden flex flex-col gap-1">
-      <div className="flex items-center">
-        <div className="min-w-8">{type.startsWith('image') ? <ImageIcon /> : type.startsWith('video') ? <VideoIcon /> : type.startsWith('audio') ? <HeadphonesIcon /> : <FileTextIcon />}</div>
-        <p className="font-semibold text-lg truncate">{name}</p>
-      </div>
-      <p className="text-sm text-gray-500">{sizeToText(size)}</p>
-    </div>
-  );
-}
 
 export function MediaTable({ multimedia }: { multimedia: UrlMediaFile[] }) {
   const show = useChatHelperStore((state) => state.show);
@@ -42,11 +23,12 @@ export function MediaTable({ multimedia }: { multimedia: UrlMediaFile[] }) {
               className="flex flex-col gap-5"
             >
               <MediaPreview
+                id={file._id}
                 src={file.url!}
+                name={file.name}
                 type={file.type}
-                interact={false}
               />
-              <MediaFileInfo
+              <MediaInfo
                 name={file.name}
                 size={file.size}
                 type={file.type}
@@ -64,11 +46,12 @@ export function MediaTable({ multimedia }: { multimedia: UrlMediaFile[] }) {
               className="flex flex-col gap-5"
             >
               <MediaPreview
+                id={file._id}
                 src={file.url!}
+                name={file.name}
                 type={file.type}
-                interact={false}
               />
-              <MediaFileInfo
+              <MediaInfo
                 name={file.name}
                 size={file.size}
                 type={file.type}

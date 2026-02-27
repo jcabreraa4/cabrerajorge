@@ -7,7 +7,6 @@ import { EditorState } from '@tiptap/pm/state';
 import { extensions } from './editor';
 import { prosemirrorSync } from './prosemirror';
 import { internalMutation } from './_generated/server';
-import { internal } from './_generated/api';
 
 export const getAll = query({
   handler: async (ctx) => {
