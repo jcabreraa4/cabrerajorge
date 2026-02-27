@@ -58,7 +58,13 @@ export function MediaPage({ preloaded }: { preloaded: Preloaded<typeof api.multi
             />
           )}
         </section>
-        <Card>
+        <MediaInfo
+          name={file.name}
+          size={file.size}
+          type={file.type}
+          className="xl:hidden"
+        />
+        <Card className="hidden xl:block">
           <CardHeader>
             <MediaInfo
               name={file.name}
