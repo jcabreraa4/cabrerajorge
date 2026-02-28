@@ -24,10 +24,10 @@ export default function Page() {
       <section className="flex flex-col lg:flex-row gap-3 xl:gap-5">
         <InputGroup className="flex-1">
           <InputGroupInput
+            disabled={!documents || documents.length === 0}
             placeholder="Search..."
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
-            disabled={!documents || documents.length === 0}
           />
           <InputGroupAddon>
             <SearchIcon />

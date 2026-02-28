@@ -1,12 +1,13 @@
 'use client';
 
-import { ChevronsUpDown, LogOutIcon, MoonIcon, SettingsIcon, SunIcon } from 'lucide-react';
+import { ChevronsUpDown, CircleUserIcon, LogOutIcon, MoonIcon, SettingsIcon, SunIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useClerk } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 
 interface NavUserProps {
   name: string;
@@ -18,6 +19,7 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
   const { isMobile } = useSidebar();
   const { signOut, openUserProfile } = useClerk();
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
 
   return (
     <SidebarMenu>
@@ -67,6 +69,13 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
             <DropdownMenuGroup>
               <DropdownMenuItem
                 className="cursor-pointer"
+                onClick={() => router.push('/settings')}
+              >
+                <SettingsIcon />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer"
                 onClick={() =>
                   openUserProfile({
                     appearance: {
@@ -75,8 +84,8 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                   })
                 }
               >
-                <SettingsIcon />
-                Settings
+                <CircleUserIcon />
+                Account
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"

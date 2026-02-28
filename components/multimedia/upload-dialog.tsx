@@ -1,21 +1,19 @@
 'use client';
 
-import type { VariantProps } from 'class-variance-authority';
 import { useMutation } from 'convex/react';
 import { Plus, Trash, UploadCloud } from 'lucide-react';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
-import { Button, type buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { api } from '@/convex/_generated/api';
 import { cn } from '@/lib/utils';
 import { sizeToText } from '@/utils/size-to-text';
 import { MediaPreview } from '@/components/multimedia/media-preview';
+import { ButtonVariant } from '@/types/shadcn';
 
 const validTypes = ['image', 'video', 'pdf', 'audio'];
-
-type ButtonVariant = VariantProps<typeof buttonVariants>['variant'];
 
 interface UploadDialogProps {
   variant?: ButtonVariant;

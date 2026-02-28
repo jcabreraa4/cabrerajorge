@@ -30,8 +30,8 @@ export default function Page() {
           onValueChange={(value) => setTypeFilter(value === 'all' ? '' : value)}
         >
           <SelectTrigger
-            className="hidden xl:flex min-w-50 cursor-pointer"
             disabled={!multimedia || multimedia.length === 0}
+            className="hidden xl:flex min-w-50 cursor-pointer"
           >
             <SelectValue />
           </SelectTrigger>
@@ -47,10 +47,10 @@ export default function Page() {
         </Select>
         <InputGroup>
           <InputGroupInput
+            disabled={!multimedia || multimedia.length === 0}
             placeholder="Search..."
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
-            disabled={!multimedia || multimedia.length === 0}
           />
           <InputGroupAddon>
             <SearchIcon />
