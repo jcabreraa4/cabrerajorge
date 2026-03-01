@@ -19,6 +19,7 @@ const validTypes = ['pdf'];
 
 export function VectorizeDialog({ variant = 'default', className }: VectorizeDialogProps) {
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 1,
@@ -29,7 +30,11 @@ export function VectorizeDialog({ variant = 'default', className }: VectorizeDia
   });
 
   async function vectorizeFile() {
-    if (!file) return;
+    if (!file) {
+      toast.error('There is no file to be processed.');
+      return;
+    }
+    setIsLoading(true);
     const toastLoader = toast.loading('Converting the file to AI embeddings...');
     const response = await processFile(file);
     if (!response?.success) toast.error('There was an error converting the file.', { id: toastLoader });
@@ -37,6 +42,7 @@ export function VectorizeDialog({ variant = 'default', className }: VectorizeDia
       toast.success('File converted to embeddings successfully.', { id: toastLoader });
       setFile(null);
     }
+    setIsLoading(false);
   }
 
   return (
@@ -81,38 +87,39 @@ export function VectorizeDialog({ variant = 'default', className }: VectorizeDia
             <p className="text-sm text-gray-600 dark:text-white/90">Drag and drop, or click to select a file</p>
           </div>
         )}
-        <DialogFooter>
-          {!file ? (
-            <Button
-              className="w-full cursor-pointer"
-              onClick={() => toast.error('No file has been selected.')}
-            >
-              <PlusIcon />
-              Process File
-            </Button>
-          ) : (
-            <div className="flex flex-col gap-3 w-full">
-              {validTypes.some((validType) => file.type.includes(validType)) && (
-                <DialogClose asChild>
-                  <Button
-                    className="w-full cursor-pointer"
-                    onClick={vectorizeFile}
-                  >
-                    <PlusIcon />
-                    Process File
-                  </Button>
-                </DialogClose>
-              )}
+        {file && (
+          <DialogFooter>
+            {isLoading ? (
               <Button
-                className="w-full cursor-pointer"
-                onClick={() => setFile(null)}
+                variant="outline"
+                className="w-full animate-pulse hover:bg-inherit"
               >
-                <TrashIcon />
-                Delete File
+                Processing...
               </Button>
-            </div>
-          )}
-        </DialogFooter>
+            ) : (
+              <div className="flex flex-col gap-3 w-full">
+                {validTypes.some((validType) => file?.type.includes(validType)) && (
+                  <DialogClose asChild>
+                    <Button
+                      className="w-full cursor-pointer"
+                      onClick={vectorizeFile}
+                    >
+                      <PlusIcon />
+                      Process File
+                    </Button>
+                  </DialogClose>
+                )}
+                <Button
+                  className="w-full cursor-pointer"
+                  onClick={() => setFile(null)}
+                >
+                  <TrashIcon />
+                  Delete File
+                </Button>
+              </div>
+            )}
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

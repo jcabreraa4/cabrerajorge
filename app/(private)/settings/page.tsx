@@ -15,7 +15,7 @@ import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTi
 import { toast } from 'sonner';
 import { processText } from '@/actions/generate-embeddings';
 import { useState } from 'react';
-import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 
 export default function Page() {
   const { isLoaded } = useAuth();
@@ -28,6 +28,10 @@ export default function Page() {
   const filteredEmbeddings = embeddings?.filter((embedding) => embedding.content.toLowerCase().includes(searchFilter.toLowerCase()));
 
   async function vectorizeText() {
+    if (!text) {
+      toast.error('There is no text to be processed.');
+      return;
+    }
     const toastLoader = toast.loading('Converting the text to AI embeddings...');
     const response = await processText(text);
     if (!response?.success) toast.error('There was an error converting the text.', { id: toastLoader });
@@ -39,8 +43,8 @@ export default function Page() {
 
   return (
     <main className="w-full flex flex-col xl:flex-row overflow-hidden">
-      <section className="hidden xl:block w-full xl:max-w-120 xl:border-r xl:pr-4 xl:mr-4"></section>
-      <section className="w-full flex flex-col gap-3 xl:gap-5">
+      <section className="hidden xl:block w-full xl:max-w-120 xl:border-r xl:pr-4"></section>
+      <section className="w-full flex flex-col gap-3 xl:gap-5 overflow-hidden xl:pl-4">
         <div className="flex flex-col lg:flex-row gap-3 xl:gap-5">
           <InputGroup>
             <InputGroupInput

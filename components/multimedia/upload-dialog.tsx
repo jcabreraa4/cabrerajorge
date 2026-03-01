@@ -21,16 +21,16 @@ interface UploadDialogProps {
 }
 
 export function UploadDialog({ variant = 'default', className }: UploadDialogProps) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const generateUrl = useMutation(api.multimedia.generateUrl);
   const fileUpload = useMutation(api.multimedia.create);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 1,
-    disabled: isUploading,
+    disabled: isLoading,
     onDrop: (files) => {
       const selectedFile = files[0];
       if (!selectedFile) return;
@@ -43,22 +43,23 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
     setFile(null);
   }
 
-  async function uploadFile(selectedFile: File) {
-    const contentType = selectedFile.type || 'application/octet-stream';
-    setIsUploading(true);
+  async function uploadFile() {
+    if (!file) return;
+    const contentType = file.type || 'application/octet-stream';
+    setIsLoading(true);
     try {
       const postUrl = await generateUrl();
       const result = await fetch(postUrl, {
         method: 'POST',
         headers: { 'Content-Type': contentType },
-        body: selectedFile
+        body: file
       });
       const { storageId } = await result.json();
       if (!result.ok || !storageId) throw new Error('Upload failed.');
       await fileUpload({
-        name: selectedFile.name,
+        name: file.name,
         type: contentType,
-        size: selectedFile.size,
+        size: file.size,
         storage: storageId
       });
       toast.success('File uploaded successfully.');
@@ -66,7 +67,7 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not upload file.');
     } finally {
-      setIsUploading(false);
+      setIsLoading(false);
     }
   }
 
@@ -75,7 +76,7 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
       open={open}
       onOpenChange={(nextOpen) => {
         setOpen(nextOpen);
-        if (!nextOpen && !isUploading) {
+        if (!nextOpen && !isLoading) {
           setFile(null);
         }
       }}
@@ -100,7 +101,7 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
             <MediaPreview
               src={URL.createObjectURL(file)}
               type={file.type || 'application/octet-stream'}
-              interact={!isUploading}
+              interact={!isLoading}
             />
             <div className="h-13 overflow-hidden flex flex-col gap-1">
               <p className="font-semibold text-lg truncate">{file.name}</p>
@@ -121,45 +122,37 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
             <p className="text-sm text-gray-600 dark:text-white/90">Drag and drop, or click to select a file</p>
           </div>
         )}
-        <DialogFooter>
-          {!file ? (
-            <Button
-              className="w-full cursor-pointer"
-              onClick={() => toast.error('No file has been selected.')}
-            >
-              <Plus />
-              Upload File
-            </Button>
-          ) : isUploading ? (
-            <Button
-              className="w-full"
-              disabled
-            >
-              Uploading...
-            </Button>
-          ) : (
-            <div className="flex flex-col gap-3 w-full">
-              {validTypes.some((validType) => file.type.includes(validType)) && (
-                <Button
-                  onClick={() => uploadFile(file)}
-                  className="w-full cursor-pointer"
-                  disabled={isUploading}
-                >
-                  <Plus />
-                  Upload File
-                </Button>
-              )}
+        {file && (
+          <DialogFooter>
+            {isLoading ? (
               <Button
-                onClick={() => setFile(null)}
-                className="w-full cursor-pointer"
-                disabled={isUploading}
+                variant="outline"
+                className="w-full animate-pulse hover:bg-inherit"
               >
-                <Trash />
-                Delete File
+                Uploading...
               </Button>
-            </div>
-          )}
-        </DialogFooter>
+            ) : (
+              <div className="flex flex-col gap-3 w-full">
+                {validTypes.some((validType) => file?.type.includes(validType)) && (
+                  <Button
+                    onClick={uploadFile}
+                    className="w-full cursor-pointer"
+                  >
+                    <Plus />
+                    Upload File
+                  </Button>
+                )}
+                <Button
+                  onClick={() => setFile(null)}
+                  className="w-full cursor-pointer"
+                >
+                  <Trash />
+                  Delete File
+                </Button>
+              </div>
+            )}
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );
