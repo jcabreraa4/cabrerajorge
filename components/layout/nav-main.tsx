@@ -1,10 +1,10 @@
 'use client';
 
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { useLocation } from '@/hooks/use-location';
 import { cn } from '@/lib/utils';
 import { BotIcon, FileTextIcon, ImageIcon, LayoutDashboardIcon, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 type Section = {
   title: string;
@@ -49,8 +49,7 @@ const sections: Section[] = [
 ];
 
 export function NavMain() {
-  const pathname = usePathname();
-  const segments = pathname.split('/').filter(Boolean);
+  const { segments } = useLocation();
 
   function isActive(url: string) {
     if (`/${segments[0]}` === url) return true;

@@ -11,7 +11,7 @@ export default function Page() {
   const { session } = useSession();
 
   return (
-    <main className="w-full">
+    <main className="p-3 xl:p-4 w-full overflow-hidden">
       <Card className="flex-1">
         <CardHeader>
           <CardTitle className="text-2xl md:text-3xl">Welcome back{isLoaded && `, ${session!.user.firstName}`}</CardTitle>

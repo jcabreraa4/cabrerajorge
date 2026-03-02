@@ -23,7 +23,7 @@ export default function Page() {
   const filteredFiles = multimedia?.filter((file) => searchFilter === '' || file.name.toLowerCase().includes(searchFilter.toLowerCase())).filter((file) => (effectiveTypeFilter === 'all' ? true : file.type.includes(effectiveTypeFilter)));
 
   return (
-    <main className="flex-1 min-h-0 w-full flex flex-col gap-3 xl:gap-8">
+    <main className="p-3 xl:p-4 w-full overflow-hidden flex flex-col gap-3 xl:gap-8">
       <section className="flex flex-col lg:flex-row gap-3 xl:gap-5">
         <Select
           value={effectiveTypeFilter}

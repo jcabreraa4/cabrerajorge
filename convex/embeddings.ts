@@ -1,5 +1,5 @@
 import { ConvexError, v } from 'convex/values';
-import { mutation, query } from './_generated/server';
+import { action, mutation, query } from './_generated/server';
 
 export const getAll = query({
   handler: async (ctx) => {
@@ -48,4 +48,11 @@ export const deleteById = mutation({
     if (!isOwner) throw new ConvexError('Unauthorized');
     await ctx.db.delete(args.id);
   }
+});
+
+export const search = action({
+  args: {
+    content: v.string()
+  },
+  handler: async (ctx, args) => {}
 });

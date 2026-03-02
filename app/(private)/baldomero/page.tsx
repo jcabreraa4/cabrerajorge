@@ -14,10 +14,10 @@ import type { ChatMessage } from '@/app/api/chat/route';
 export default function Page() {
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
 
-  const [input, setInput] = useState<string>('');
+  const [input, setInput] = useState('');
   const [files, setFiles] = useState<File[]>([]);
 
-  const [lastInput, setLastInput] = useState<string>('');
+  const [lastInput, setLastInput] = useState('');
   const [chatModel, setChatModel] = useState<ModelId>('mistral-large-latest');
 
   const selectedModel = models.find((m) => m.id === chatModel);
@@ -32,8 +32,8 @@ export default function Page() {
   }
 
   return (
-    <main className="h-full w-full flex flex-col gap-1 items-center">
-      <section className="flex-1 min-h-0 w-full overflow-y-scroll flex justify-center">
+    <section className="w-full flex flex-1 flex-col gap-1 items-center p-3 xl:p-4">
+      <div className="flex-1 min-h-0 w-full overflow-y-scroll flex justify-center">
         <div className="w-full max-w-200">
           <ChatMessages
             messages={messages}
@@ -42,9 +42,9 @@ export default function Page() {
             lastInput={lastInput}
           />
         </div>
-      </section>
+      </div>
       {((messages.length == 0 && !input.trim()) || files.length != 0) && (
-        <section className="w-full max-w-200 h-9">
+        <div className="w-full max-w-200 h-9">
           {messages.length == 0 && !input.trim() && files.length === 0 ? (
             <ChatSuggestions
               sendMessage={sendMessage}
@@ -57,7 +57,7 @@ export default function Page() {
               setFiles={setFiles}
             />
           )}
-        </section>
+        </div>
       )}
       <PromptInput
         globalDrop
@@ -118,6 +118,6 @@ export default function Page() {
           />
         </PromptInputFooter>
       </PromptInput>
-    </main>
+    </section>
   );
 }

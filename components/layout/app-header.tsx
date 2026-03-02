@@ -3,11 +3,11 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
-import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { BotIcon } from 'lucide-react';
 import { useChatHelperStore } from '@/store/helper-store';
 import Link from 'next/link';
+import { useLocation } from '@/hooks/use-location';
 
 const chatbotPage = 'baldomero';
 
@@ -16,9 +16,8 @@ function capitalize(word: string) {
 }
 
 export function AppHeader() {
-  const pathname = usePathname();
-  const segments = pathname.split('/').filter(Boolean);
-  const section = segments[0] ? capitalize(segments[0]) : '';
+  const { segments } = useLocation();
+  const section = capitalize(segments[0]);
   const hideChatbot = segments[0] === chatbotPage;
 
   const show = useChatHelperStore((state) => state.show);

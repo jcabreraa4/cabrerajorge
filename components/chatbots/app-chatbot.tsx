@@ -6,20 +6,18 @@ import { PromptInput, PromptInputBody, PromptInputButton, PromptInputFooter, Pro
 import { GlobeIcon, PlusIcon, WrenchIcon } from 'lucide-react';
 import { ChatMessages } from '@/components/chatbots/chat-messages';
 import { useChatHelperStore } from '@/store/helper-store';
-import { usePathname } from 'next/navigation';
 import { AttachedFiles } from '@/components/chatbots/attached-files';
 import { ModelsDialog } from '@/components/chatbots/models-dialog';
 import type { ChatMessage } from '@/app/api/chat/route';
 import { models, type ModelId } from '@/lib/chatbot/models';
 import { cn } from '@/lib/utils';
+import { useLocation } from '@/hooks/use-location';
 
 const chatbotPage = 'baldomero';
 
 export function AppChatbot({ className }: { className?: string }) {
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
-
-  const pathname = usePathname();
-  const segments = pathname.split('/').filter(Boolean);
+  const { segments } = useLocation();
 
   const show = useChatHelperStore((state) => state.show);
   const isChatbotPage = segments[0] === chatbotPage;

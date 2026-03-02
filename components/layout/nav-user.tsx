@@ -7,7 +7,6 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/c
 import { useClerk } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 
 interface NavUserProps {
   name: string;
@@ -19,7 +18,6 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
   const { isMobile } = useSidebar();
   const { signOut, openUserProfile } = useClerk();
   const { theme, setTheme } = useTheme();
-  const router = useRouter();
 
   return (
     <SidebarMenu>
@@ -67,13 +65,6 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => router.push('/settings')}
-              >
-                <SettingsIcon />
-                Settings
-              </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={() =>

@@ -23,9 +23,15 @@ export default defineSchema({
   }).index('by_owner', ['owner']),
   embeddings: defineTable({
     content: v.string(),
-    vector: v.array(v.number()),
+    vector: v.array(v.float64()),
     owner: v.string()
-  }).index('by_owner', ['owner'])
+  })
+    .index('by_owner', ['owner'])
+    .vectorIndex('by_vector', {
+      vectorField: 'vector',
+      dimensions: 1536,
+      filterFields: ['owner']
+    })
 });
 
 export type Document = Doc<'documents'>;

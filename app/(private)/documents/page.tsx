@@ -20,7 +20,7 @@ export default function Page() {
   const filteredDocuments = documents?.filter((document) => document.title.toLowerCase().includes(searchFilter.toLowerCase()));
 
   return (
-    <main className="flex-1 min-h-0 w-full flex flex-col overflow-hidden gap-3 xl:gap-8">
+    <main className="p-3 xl:p-4 w-full overflow-hidden flex flex-col gap-3 xl:gap-8">
       <section className="flex flex-col lg:flex-row gap-3 xl:gap-5">
         <InputGroup className="flex-1">
           <InputGroupInput
