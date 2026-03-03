@@ -4,10 +4,13 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbS
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { BotIcon } from 'lucide-react';
+import { BotIcon, ImageIcon, MessageSquareIcon, PhoneCallIcon, SettingsIcon } from 'lucide-react';
 import { useChatHelperStore } from '@/store/helper-store';
 import Link from 'next/link';
 import { useLocation } from '@/hooks/use-location';
+import { useDevice } from '@/hooks/use-device';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { useRouter } from 'next/navigation';
 
 const chatbotPage = 'baldomero';
 
@@ -17,6 +20,9 @@ function capitalize(word: string) {
 
 export function AppHeader() {
   const { segments } = useLocation();
+  const device = useDevice();
+  const router = useRouter();
+
   const section = capitalize(segments[0]);
   const hideChatbot = segments[0] === chatbotPage;
 
@@ -41,7 +47,7 @@ export function AppHeader() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      {!hideChatbot && (
+      {!hideChatbot ? (
         <Button
           variant={show ? 'default' : 'outline'}
           className="cursor-pointer hidden 2xl:block"
@@ -49,6 +55,31 @@ export function AppHeader() {
         >
           <BotIcon />
         </Button>
+      ) : (
+        device !== 'computer' && (
+          <Select
+            value={segments[1] ? `/${segments[0]}/${segments[1]}` : `/${segments[0]}`}
+            onValueChange={(value) => router.push(value)}
+          >
+            <SelectTrigger className="cursor-pointer">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="/baldomero">
+                <MessageSquareIcon />
+              </SelectItem>
+              <SelectItem value="/baldomero/images">
+                <ImageIcon />
+              </SelectItem>
+              <SelectItem value="/baldomero/assistant">
+                <PhoneCallIcon />
+              </SelectItem>
+              <SelectItem value="/baldomero/settings">
+                <SettingsIcon />
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        )
       )}
     </header>
   );

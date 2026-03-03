@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Page() {
   return (
-    <section className="w-full flex flex-col justify-center items-center gap-5">
+    <section className="w-full h-full flex flex-col justify-center items-center gap-5">
       <div className="flex flex-col gap-3 items-center">
         <p className="text-xl font-semibold">Under Construction!</p>
         <p>This page is under construction.</p>

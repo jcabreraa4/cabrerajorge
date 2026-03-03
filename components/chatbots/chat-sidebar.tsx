@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useLocation } from '@/hooks/use-location';
+import { cn } from '@/lib/utils';
 import { type LucideIcon, ImageIcon, MessageSquareIcon, PhoneCallIcon, SettingsIcon } from 'lucide-react';
 import Link from 'next/link';
 
@@ -29,7 +30,7 @@ const sections: Section[] = [
   }
 ];
 
-export function ChatSidebar() {
+export function ChatSidebar({ className }: { className?: string }) {
   const { segments } = useLocation();
 
   function isActive(url: string) {
@@ -39,7 +40,7 @@ export function ChatSidebar() {
   }
 
   return (
-    <section className="hidden xl:flex flex-col gap-2 border-l px-2 py-4">
+    <section className={cn(`flex-col gap-2 border-l px-2 py-4`, className)}>
       {sections.map((section) => (
         <Link
           key={section.url}

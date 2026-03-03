@@ -10,6 +10,7 @@ import { ChatSuggestions } from '@/components/chatbots/chat-suggestions';
 import { AttachedFiles } from '@/components/chatbots/attached-files';
 import { ModelsDialog } from '@/components/chatbots/models-dialog';
 import type { ChatMessage } from '@/app/api/chat/route';
+import { cn } from '@/lib/utils';
 
 export default function Page() {
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
@@ -32,9 +33,9 @@ export default function Page() {
   }
 
   return (
-    <section className="w-full flex flex-1 flex-col gap-1 items-center p-3 xl:p-4">
-      <div className="flex-1 min-h-0 w-full overflow-y-scroll flex justify-center">
-        <div className="w-full max-w-200">
+    <main className="w-full h-full flex flex-col gap-1 items-center py-3 xl:p-4">
+      <section className="flex flex-1 w-full overflow-y-scroll justify-center">
+        <div className="w-full max-w-200 px-1 xl:px-0">
           <ChatMessages
             messages={messages}
             status={status}
@@ -42,9 +43,9 @@ export default function Page() {
             lastInput={lastInput}
           />
         </div>
-      </div>
+      </section>
       {((messages.length == 0 && !input.trim()) || files.length != 0) && (
-        <div className="w-full max-w-200 h-9">
+        <section className="w-full max-w-200 h-9 px-3 xl:px-0">
           {messages.length == 0 && !input.trim() && files.length === 0 ? (
             <ChatSuggestions
               sendMessage={sendMessage}
@@ -57,13 +58,13 @@ export default function Page() {
               setFiles={setFiles}
             />
           )}
-        </div>
+        </section>
       )}
       <PromptInput
         globalDrop
         multiple
         onSubmit={handleSubmit}
-        className="w-full max-w-200 mt-2"
+        className="w-full max-w-200 mt-2 px-3 xl:px-0"
       >
         <PromptInputBody>
           <PromptInputTextarea
@@ -93,14 +94,14 @@ export default function Page() {
               />
               <PromptInputButton
                 variant={selectedModel?.useTools ? 'default' : 'outline'}
-                className={`hidden xl:flex cursor-pointer ${selectedModel?.useTools ? 'hover:bg-primary' : 'hover:bg-transparent text-black dark:text-white'}`}
+                className={cn('hidden xl:flex cursor-pointer', selectedModel?.useTools ? 'hover:bg-primary' : 'hover:bg-transparent text-black dark:text-white')}
               >
                 <WrenchIcon size={16} />
                 Tool Calling
               </PromptInputButton>
               <PromptInputButton
                 variant={selectedModel?.webSearch ? 'default' : 'outline'}
-                className={`hidden xl:flex cursor-pointer ${selectedModel?.webSearch ? 'hover:bg-primary' : 'hover:bg-transparent text-black dark:text-white'}`}
+                className={cn('hidden xl:flex cursor-pointer', selectedModel?.webSearch ? 'hover:bg-primary' : 'hover:bg-transparent text-black dark:text-white')}
               >
                 <GlobeIcon size={16} />
                 Web Search
@@ -118,6 +119,6 @@ export default function Page() {
           />
         </PromptInputFooter>
       </PromptInput>
-    </section>
+    </main>
   );
 }

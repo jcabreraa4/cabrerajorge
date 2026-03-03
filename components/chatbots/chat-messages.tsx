@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
-import { toast } from 'sonner';
 import type { ChatMessage } from '@/app/api/chat/route';
 import { CopyIcon, DownloadIcon, ImageIcon, Loader2Icon, MessageSquareIcon, RefreshCcwIcon, SaveIcon } from 'lucide-react';
 import { Conversation, ConversationContent, ConversationEmptyState, ConversationScrollButton } from '@/components/ui/conversation';
@@ -14,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import { Tool, ToolContent, ToolHeader, ToolInput, ToolOutput } from '@/components/ui/tool';
 import { CodeBlock } from '@/components/ui/code-block';
+import { copyText } from '@/utils/copy-text';
 
 interface ChatMessagesProps {
   messages: ChatMessage[];
@@ -24,11 +24,6 @@ interface ChatMessagesProps {
 
 export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMessagesProps) {
   const { user, isLoaded } = useUser();
-
-  function copyMessage(message: string) {
-    navigator.clipboard.writeText(message);
-    toast.success('Message copied to clipboard successfully.');
-  }
 
   return (
     <Conversation>
@@ -113,7 +108,7 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                           <MessageAction
                             label="Copy"
                             className="cursor-pointer"
-                            onClick={() => copyMessage(part.text)}
+                            onClick={() => copyText({ text: part.text, type: 'message' })}
                           >
                             <CopyIcon />
                           </MessageAction>

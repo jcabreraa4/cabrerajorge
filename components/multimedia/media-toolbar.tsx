@@ -13,6 +13,7 @@ import { api } from '@/convex/_generated/api';
 import { MediaFile } from '@/convex/schema';
 import { Textarea } from '@/components/ui/textarea';
 import { useRouter } from 'next/navigation';
+import { copyText } from '@/utils/copy-text';
 
 interface SectionButtonProps {
   onClick: () => void;
@@ -21,11 +22,6 @@ interface SectionButtonProps {
 }
 
 type UrlMediaFile = MediaFile & { url: string | null };
-
-function copyLink(link: string) {
-  navigator.clipboard.writeText(link);
-  toast.success('Link copied to clipboard successfully.');
-}
 
 async function mediaDownload(url: string, name: string) {
   const toastId = toast.loading('Preparing the download of the file...');
@@ -142,7 +138,7 @@ export function MediaToolbar({ file }: { file: UrlMediaFile }) {
     },
     {
       icon: Copy,
-      onClick: () => copyLink(file.url!)
+      onClick: () => copyText({ text: file.url!, type: 'link' })
     },
     {
       icon: Download,

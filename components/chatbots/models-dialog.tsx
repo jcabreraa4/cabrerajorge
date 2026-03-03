@@ -14,6 +14,10 @@ export function ModelsDialog({ chatModel, setChatModel }: ModelsDialogProps) {
 
   const selectedModel = models.find((m) => m.id === chatModel);
 
+  function capitalize(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
   return (
     <ModelSelector
       onOpenChange={setOpenSelector}
@@ -25,7 +29,8 @@ export function ModelsDialog({ chatModel, setChatModel }: ModelsDialogProps) {
       >
         <PromptInputButton variant="ghost">
           {selectedModel?.chefSlug && <ModelSelectorLogo provider={selectedModel.chefSlug} />}
-          {selectedModel?.name && <ModelSelectorName>{selectedModel.name}</ModelSelectorName>}
+          {selectedModel?.name && <ModelSelectorName className="hidden xl:block">{selectedModel.name}</ModelSelectorName>}
+          {selectedModel?.chefSlug && <ModelSelectorName className="xl:hidden">{capitalize(selectedModel.chefSlug)}</ModelSelectorName>}
           <ChevronDownIcon />
         </PromptInputButton>
       </ModelSelectorTrigger>

@@ -2,9 +2,9 @@ import { ChatSidebar } from '@/components/chatbots/chat-sidebar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="w-full overflow-hidden flex">
+    <div className="w-full xl:flex flex-row">
       {children}
-      <ChatSidebar />
-    </main>
+      <ChatSidebar className="hidden xl:flex" />
+    </div>
   );
 }

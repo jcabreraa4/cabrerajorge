@@ -6,7 +6,7 @@ const TABLET_MAX = 1024;
 
 export type Device = 'mobile' | 'tablet' | 'computer';
 
-export function useDevice() {
+export function useDevice(): Device {
   const getDevice = (): Device => {
     const width = window.innerWidth;
     if (width <= MOBILE_MAX) return 'mobile';
