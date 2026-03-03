@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useLocation } from '@/hooks/use-location';
-import { type LucideIcon, BotIcon, ImageIcon, MessageSquareIcon, SettingsIcon } from 'lucide-react';
+import { type LucideIcon, ImageIcon, MessageSquareIcon, PhoneCallIcon, SettingsIcon } from 'lucide-react';
 import Link from 'next/link';
 
 type Section = {
@@ -21,7 +21,7 @@ const sections: Section[] = [
   },
   {
     url: '/baldomero/assistant',
-    icon: BotIcon
+    icon: PhoneCallIcon
   },
   {
     url: '/baldomero/settings',

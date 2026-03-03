@@ -42,7 +42,9 @@ export default function Page() {
 
   return (
     <main className="p-3 xl:p-4 w-full overflow-hidden flex flex-col xl:flex-row">
-      <section className="hidden xl:block w-full xl:max-w-120 xl:border-r xl:pr-4"></section>
+      <section className="hidden xl:flex flex-col gap-2 w-full xl:max-w-120 xl:border-r xl:pr-4">
+        <p>Customization</p>
+      </section>
       <section className="w-full flex flex-col gap-3 xl:gap-5 overflow-hidden xl:pl-4">
         <div className="flex flex-col lg:flex-row gap-3 xl:gap-5">
           <InputGroup>

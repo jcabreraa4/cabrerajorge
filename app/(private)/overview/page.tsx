@@ -18,36 +18,36 @@ export default function Page() {
           <CardDescription>Check your documents and multimedia. Or just ask AI!</CardDescription>
         </CardHeader>
         <CardFooter className="gap-3">
-          <CardAction className="hidden xl:block">
+          <CardAction className="hidden lg:block">
             <Link href="/documents">
               <Button
                 variant="secondary"
                 className="cursor-pointer"
               >
                 Check Documents
-                <ArrowRightIcon className="size-4" />
+                <ArrowRightIcon />
               </Button>
             </Link>
           </CardAction>
-          <CardAction className="hidden xl:block">
+          <CardAction className="hidden lg:block">
             <Link href="/multimedia">
               <Button
                 variant="secondary"
                 className="cursor-pointer"
               >
                 Check Multimedia
-                <ArrowRightIcon className="size-4" />
+                <ArrowRightIcon />
               </Button>
             </Link>
           </CardAction>
-          <CardAction>
+          <CardAction className="w-full lg:w-fit">
             <Link href="/baldomero">
               <Button
                 variant="secondary"
-                className="cursor-pointer"
+                className="cursor-pointer w-full lg:w-fit"
               >
                 Chat with AI
-                <ArrowRightIcon className="size-4" />
+                <ArrowRightIcon />
               </Button>
             </Link>
           </CardAction>
