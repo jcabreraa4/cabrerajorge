@@ -1,6 +1,6 @@
 import { StarterKit } from '@tiptap/starter-kit';
 import { TextStyleKit } from '@tiptap/extension-text-style';
-import { BulletList, TaskItem, TaskList } from '@tiptap/extension-list';
+import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { TableKit } from '@tiptap/extension-table';
 import { Highlight } from '@tiptap/extension-highlight';
 import { Link } from '@tiptap/extension-link';

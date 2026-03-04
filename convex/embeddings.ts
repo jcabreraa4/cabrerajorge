@@ -13,7 +13,10 @@ export const getAll = query({
 });
 
 export const create = mutation({
-  args: { content: v.string(), vector: v.array(v.number()) },
+  args: {
+    content: v.string(),
+    vector: v.array(v.number())
+  },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
     if (!user) throw new ConvexError('Unauthorized');
@@ -51,8 +54,6 @@ export const deleteById = mutation({
 });
 
 export const search = action({
-  args: {
-    content: v.string()
-  },
+  args: { content: v.string() },
   handler: async (ctx, args) => {}
 });

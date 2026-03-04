@@ -8,7 +8,7 @@ import { sizeToText } from '@/utils/size-to-text';
 import { MediaPreview } from '@/components/multimedia/media-preview';
 import { toast } from 'sonner';
 import { useDropzone } from 'react-dropzone';
-import { processFile } from '@/actions/generate-embeddings';
+import { processFile } from '@/actions/embeddings';
 
 interface VectorizeDialogProps {
   variant?: ButtonVariant;

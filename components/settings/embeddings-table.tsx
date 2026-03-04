@@ -6,13 +6,14 @@ import { toast } from 'sonner';
 import type { Embedding } from '@/convex/schema';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { Label } from '@/components/ui/label';
 
 export function EmbeddingsTable({ embeddings }: { embeddings: Embedding[] }) {
   const deleteEmbeddings = useMutation(api.embeddings.deleteAll);
   const deleteEmbedding = useMutation(api.embeddings.deleteById);
 
   return (
-    <Table className="overflow-hidden">
+    <Table>
       <TableHeader>
         <TableRow className="hover:bg-inherit h-12">
           <TableHead>
@@ -52,12 +53,9 @@ export function EmbeddingsTable({ embeddings }: { embeddings: Embedding[] }) {
           <TableHead>Content</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody className="overflow-x-scroll overflow-y-scroll">
+      <TableBody>
         {embeddings.map((embedding, index) => (
-          <TableRow
-            key={embedding._id}
-            className="overflow-hidden max-w-120"
-          >
+          <TableRow key={embedding._id}>
             <TableCell>
               <Dialog>
                 <DialogTrigger asChild>
@@ -71,9 +69,9 @@ export function EmbeddingsTable({ embeddings }: { embeddings: Embedding[] }) {
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Embedding {index + 1}</DialogTitle>
-                    <DialogDescription></DialogDescription>
                   </DialogHeader>
-                  {embedding.content}
+                  <Label className="lg:hidden">{embedding.content}</Label>
+                  <span className="hidden lg:flex">{embedding.content}</span>
                   <DialogFooter className="flex-row">
                     <DialogClose asChild>
                       <Button

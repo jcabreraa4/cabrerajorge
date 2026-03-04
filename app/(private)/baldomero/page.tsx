@@ -11,8 +11,13 @@ import { AttachedFiles } from '@/components/chatbots/attached-files';
 import { ModelsDialog } from '@/components/chatbots/models-dialog';
 import type { ChatMessage } from '@/app/api/chat/route';
 import { cn } from '@/lib/utils';
+import { useQuery } from 'convex/react';
+import { useAuth, useUser } from '@clerk/nextjs';
+import { api } from '@/convex/_generated/api';
 
 export default function Page() {
+  const { isLoaded } = useAuth();
+  const { user } = useUser();
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
 
   const [input, setInput] = useState('');
@@ -23,10 +28,21 @@ export default function Page() {
 
   const selectedModel = models.find((m) => m.id === chatModel);
 
+  const information = useQuery(api.information.getOne, isLoaded ? {} : 'skip');
+
   function handleSubmit() {
     const dt = new DataTransfer();
     files.forEach((file) => dt.items.add(file));
-    sendMessage({ text: input, files: dt.files }, { body: { model: chatModel } });
+    sendMessage(
+      { text: input, files: dt.files },
+      {
+        body: {
+          model: chatModel,
+          firstName: user?.firstName,
+          context: information?.context
+        }
+      }
+    );
     setLastInput(input);
     setInput('');
     setFiles([]);

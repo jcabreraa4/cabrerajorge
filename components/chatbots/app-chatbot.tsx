@@ -12,10 +12,15 @@ import type { ChatMessage } from '@/app/api/chat/route';
 import { models, type ModelId } from '@/lib/chatbot/models';
 import { cn } from '@/lib/utils';
 import { useLocation } from '@/hooks/use-location';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { useAuth, useUser } from '@clerk/nextjs';
 
 const chatbotPage = 'baldomero';
 
 export function AppChatbot({ className }: { className?: string }) {
+  const { isLoaded } = useAuth();
+  const { user } = useUser();
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
   const { segments } = useLocation();
 
@@ -30,10 +35,21 @@ export function AppChatbot({ className }: { className?: string }) {
 
   const selectedModel = models.find((m) => m.id === chatModel);
 
+  const information = useQuery(api.information.getOne, isLoaded ? {} : 'skip');
+
   function handleSubmit() {
     const dt = new DataTransfer();
     files.forEach((file) => dt.items.add(file));
-    sendMessage({ text: input, files: dt.files }, { body: { model: chatModel } });
+    sendMessage(
+      { text: input, files: dt.files },
+      {
+        body: {
+          model: chatModel,
+          firstName: user?.firstName,
+          context: information?.context
+        }
+      }
+    );
     setLastInput(input);
     setInput('');
     setFiles([]);

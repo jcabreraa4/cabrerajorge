@@ -4,7 +4,7 @@ import { google } from '@ai-sdk/google';
 import { mistral } from '@ai-sdk/mistral';
 import { NextResponse } from 'next/server';
 import { models } from '@/lib/chatbot/models';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { auth } from '@clerk/nextjs/server';
 import { headers } from 'next/headers';
 import { tools } from './tools';
 
@@ -16,13 +16,14 @@ export type ChatMessage = UIMessage<never, UIDataTypes, ChatTools>;
 interface RequestProps {
   messages: UIMessage[];
   model: string;
-  temperature: number | 1;
+  firstName?: string;
+  context?: string;
+  temperature?: number | 1;
 }
 
 export async function POST(request: Request) {
-  const { userId } = await auth();
+  const userId = await auth();
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const user = await currentUser();
 
   const headersList = await headers();
   const referer = headersList.get('referer') ?? 'unknown';
@@ -34,7 +35,7 @@ export async function POST(request: Request) {
     year: 'numeric'
   });
 
-  const { messages, model, temperature }: RequestProps = await request.json();
+  const { messages, model, firstName, context, temperature }: RequestProps = await request.json();
 
   const selectedModel = models.find((m) => m.id === model);
 
@@ -44,7 +45,7 @@ export async function POST(request: Request) {
     temperature: temperature,
     system: `
         You are Baldomero, a helpful, approachable, personal assistant inside a web application with useful features. You must chat in the same language the user does.
-        The user's first name is ${user!.firstName}, today's date is ${date} and the user location within the app is ${currentPath || 'unknown'}.
+        The user's first name is ${firstName || 'unknown'}, he's persona context is ${context || 'unknown'}, today's date is ${date || 'unknown'} and the user location within the app is ${currentPath || 'unknown'}.
         Page 1: "Overview". Just a dashboard with basic info about the user and the app (Nothing relevant from the url location here).
         Page 2: "Baldomero". The main chatbot UI when talking to AI (Nothing relevant from the url location here).
         Page 3: "Documents". User's Google-docs-like text documents with tiptap-editor format. App location: (/documents) or (/documents/:documentId) if they are inside a document. When updating a document, first LOAD that document to see whats inside and always return content as valid ProseMirror JSON, preserving existing content unless told otherwise. Base structure: {"type":"doc","content":[{"type":"paragraph","attrs":{"textAlign":null},"content":[{"type":"text","text":"Text in the document"}]}]}

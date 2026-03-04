@@ -11,6 +11,7 @@
 import type * as documents from "../documents.js";
 import type * as editor from "../editor.js";
 import type * as embeddings from "../embeddings.js";
+import type * as information from "../information.js";
 import type * as multimedia from "../multimedia.js";
 import type * as prosemirror from "../prosemirror.js";
 
@@ -24,6 +25,7 @@ declare const fullApi: ApiFromModules<{
   documents: typeof documents;
   editor: typeof editor;
   embeddings: typeof embeddings;
+  information: typeof information;
   multimedia: typeof multimedia;
   prosemirror: typeof prosemirror;
 }>;
