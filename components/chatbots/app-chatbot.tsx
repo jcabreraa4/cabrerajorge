@@ -14,13 +14,12 @@ import { cn } from '@/lib/utils';
 import { useLocation } from '@/hooks/use-location';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import { useAuth, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 
 const chatbotPage = 'baldomero';
 
 export function AppChatbot({ className }: { className?: string }) {
-  const { isLoaded } = useAuth();
-  const { user } = useUser();
+  const { isLoaded, user } = useUser();
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
   const { segments } = useLocation();
 

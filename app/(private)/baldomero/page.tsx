@@ -12,12 +12,11 @@ import { ModelsDialog } from '@/components/chatbots/models-dialog';
 import type { ChatMessage } from '@/app/api/chat/route';
 import { cn } from '@/lib/utils';
 import { useQuery } from 'convex/react';
-import { useAuth, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { api } from '@/convex/_generated/api';
 
 export default function Page() {
-  const { isLoaded } = useAuth();
-  const { user } = useUser();
+  const { isLoaded, user } = useUser();
   const { messages, status, sendMessage, regenerate } = useChat<ChatMessage>();
 
   const [input, setInput] = useState('');

@@ -61,7 +61,7 @@ export function AppHeader() {
             value={segments[1] ? `/${segments[0]}/${segments[1]}` : `/${segments[0]}`}
             onValueChange={(value) => router.push(value)}
           >
-            <SelectTrigger className="cursor-pointer">
+            <SelectTrigger className="cursor-pointer border-0 shadow-none">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-full flex flex-row">
       {children}
-      <ChatSidebar className="hidden xl:flex" />
+      <ChatSidebar className="hidden lg:flex" />
     </div>
   );
 }
