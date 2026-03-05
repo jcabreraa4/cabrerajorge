@@ -28,6 +28,7 @@ export function MediaPreview({ id, src, name, type, interact = false }: MediaPre
     >
       {fileType === 'image' ? (
         <ImageRender
+          fill
           src={src}
           alt={name || 'Image'}
           className="object-cover"

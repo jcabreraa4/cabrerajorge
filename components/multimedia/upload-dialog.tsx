@@ -43,18 +43,27 @@ export function UploadDialog({ variant = 'default', className }: UploadDialogPro
     try {
       setIsLoading(true);
       const fileType = file.type || 'application/octet-stream';
+      let width: number | undefined;
+      let height: number | undefined;
+      if (fileType.includes('image')) {
+        await new Promise<void>((resolve) => {
+          const img = new window.Image();
+          img.src = URL.createObjectURL(file);
+          img.onload = () => {
+            width = img.naturalWidth;
+            height = img.naturalHeight;
+            resolve();
+          };
+        });
+      }
       const fetchUrl = await generateUrl();
-      const response = await fetch(fetchUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': fileType },
-        body: file
-      });
+      const response = await fetch(fetchUrl, { method: 'POST', headers: { 'Content-Type': fileType }, body: file });
       const { storageId } = await response.json();
-      await fileUpload({ name: file.name, type: fileType, size: file.size, storage: storageId });
+      await fileUpload({ name: file.name, type: fileType, size: file.size, storage: storageId, width, height });
       toast.success('The file was uploaded successfully.');
       setOpen(false);
       setFile(null);
-    } catch (error) {
+    } catch {
       toast.error('The file could not be uploaded.');
     } finally {
       setIsLoading(false);

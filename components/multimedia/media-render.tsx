@@ -17,16 +17,42 @@ function RenderLoader() {
 interface ImageRenderProps {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
   className?: string;
+  fill?: boolean;
 }
 
-export function ImageRender({ src, alt, className }: ImageRenderProps) {
+export function ImageRender({ src, alt, width, height, className, fill = false }: ImageRenderProps) {
+  if (fill) {
+    return (
+      <Image
+        fill
+        src={src}
+        alt={alt}
+        sizes="100vw"
+        className={cn('object-contain pointer-events-none', className)}
+      />
+    );
+  }
+
+  if (width && height) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        className={cn('w-auto max-w-full h-auto max-h-[80vh] rounded-md mx-auto pointer-events-none', className)}
+      />
+    );
+  }
+
   return (
-    <Image
-      fill
+    <img
       src={src}
       alt={alt}
-      className={cn('pointer-events-none', className)}
+      className={cn('max-w-full h-auto max-h-[80vh] rounded-md pointer-events-none', className)}
     />
   );
 }

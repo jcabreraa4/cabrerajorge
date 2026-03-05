@@ -45,6 +45,8 @@ export const create = mutation({
     name: v.string(),
     type: v.string(),
     size: v.number(),
+    width: v.optional(v.number()),
+    height: v.optional(v.number()),
     storage: v.id('_storage')
   },
   handler: async (ctx, args) => {
@@ -55,9 +57,11 @@ export const create = mutation({
       note: '',
       type: args.type,
       size: args.size,
+      width: args.width,
+      height: args.height,
       storage: args.storage,
-      starred: false,
-      owner: user.subject
+      owner: user.subject,
+      starred: false
     });
   }
 });

@@ -18,6 +18,8 @@ export default defineSchema({
     type: v.string(),
     size: v.number(),
     starred: v.boolean(),
+    width: v.optional(v.number()),
+    height: v.optional(v.number()),
     storage: v.id('_storage'),
     owner: v.string()
   }).index('by_owner', ['owner']),
