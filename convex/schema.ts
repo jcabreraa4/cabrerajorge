@@ -10,19 +10,22 @@ export default defineSchema({
   documents: defineTable({
     title: v.string(),
     content: v.string(),
+    starred: v.boolean(),
+    updated: v.number(),
     owner: v.string()
-  }).index('by_owner', ['owner']),
+  }).index('by_owner_updated', ['owner', 'updated']),
   multimedia: defineTable({
     name: v.string(),
     note: v.string(),
     type: v.string(),
     size: v.number(),
     starred: v.boolean(),
+    updated: v.number(),
     width: v.optional(v.number()),
     height: v.optional(v.number()),
     storage: v.id('_storage'),
     owner: v.string()
-  }).index('by_owner', ['owner']),
+  }).index('by_owner_updated', ['owner', 'updated']),
   embeddings: defineTable({
     content: v.string(),
     vector: v.array(v.float64()),

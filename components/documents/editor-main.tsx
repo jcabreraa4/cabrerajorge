@@ -32,7 +32,7 @@ export function EditorMain({ preloadedDocument }: { preloadedDocument: Preloaded
     );
 
   return (
-    <main className="w-full flex flex-col gap-3">
+    <main className="p-3 xl:p-4 w-full flex flex-col gap-3">
       <DesktopToolbar
         document={document}
         className="hidden xl:flex"

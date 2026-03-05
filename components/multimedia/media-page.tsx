@@ -38,7 +38,7 @@ export function MediaPage({ preloaded }: { preloaded: Preloaded<typeof api.multi
             alt={file.name}
             width={file.width}
             height={file.height}
-            className="mx-auto"
+            className="mx-auto border border-black h-full"
           />
         ) : type === 'video' ? (
           <div className="rounded-md overflow-hidden relative aspect-video border border-black bg-black">

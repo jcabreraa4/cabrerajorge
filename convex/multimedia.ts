@@ -8,7 +8,8 @@ export const getAll = query({
     if (!user) throw new ConvexError('Unauthorized');
     const multimedia = await ctx.db
       .query('multimedia')
-      .withIndex('by_owner', (q) => q.eq('owner', user.subject))
+      .withIndex('by_owner_updated', (q) => q.eq('owner', user.subject))
+      .order('desc')
       .collect();
     return await Promise.all(multimedia.map(async (file) => ({ ...file, url: await ctx.storage.getUrl(file.storage) })));
   }
@@ -61,6 +62,7 @@ export const create = mutation({
       height: args.height,
       storage: args.storage,
       owner: user.subject,
+      updated: Date.now(),
       starred: false
     });
   }
@@ -97,7 +99,8 @@ export const updateById = mutation({
     await ctx.db.patch(args.id, {
       ...(args.name !== undefined ? { name: args.name } : {}),
       ...(args.note !== undefined ? { note: args.note } : {}),
-      ...(args.starred !== undefined ? { starred: args.starred } : {})
+      ...(args.starred !== undefined ? { starred: args.starred } : {}),
+      updated: Date.now()
     });
   }
 });

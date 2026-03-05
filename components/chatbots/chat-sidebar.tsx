@@ -40,7 +40,7 @@ export function ChatSidebar({ className }: { className?: string }) {
   }
 
   return (
-    <section className={cn(`flex-col gap-2 border-l px-2 py-4`, className)}>
+    <section className={cn(`flex-col gap-2 border-l p-2`, className)}>
       {sections.map((section) => (
         <Link
           key={section.url}

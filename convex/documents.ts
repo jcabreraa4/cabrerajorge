@@ -14,7 +14,8 @@ export const getAll = query({
     if (!user) throw new ConvexError('Unauthorized');
     return await ctx.db
       .query('documents')
-      .withIndex('by_owner', (q) => q.eq('owner', user.subject))
+      .withIndex('by_owner_updated', (q) => q.eq('owner', user.subject))
+      .order('desc')
       .collect();
   }
 });
@@ -43,6 +44,8 @@ export const create = mutation({
     return await ctx.db.insert('documents', {
       title: args.title ?? 'Untitled Document',
       content: args.content ?? '{"type":"doc","content":[]}',
+      starred: false,
+      updated: Date.now(),
       owner: user.subject
     });
   }
@@ -65,7 +68,8 @@ export const updateById = mutation({
   args: {
     id: v.id('documents'),
     title: v.optional(v.string()),
-    content: v.optional(v.string())
+    content: v.optional(v.string()),
+    starred: v.optional(v.boolean())
   },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
@@ -76,7 +80,9 @@ export const updateById = mutation({
     if (!isOwner) throw new ConvexError('Unauthorized');
     await ctx.db.patch(args.id, {
       ...(args.title !== undefined ? { title: args.title } : {}),
-      ...(args.content !== undefined ? { content: args.content } : {})
+      ...(args.content !== undefined ? { content: args.content } : {}),
+      ...(args.starred !== undefined ? { starred: args.starred } : {}),
+      updated: Date.now()
     });
   }
 });

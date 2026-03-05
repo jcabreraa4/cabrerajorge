@@ -18,6 +18,6 @@ export const { getSnapshot, submitSnapshot, latestVersion, getSteps, submitSteps
   checkRead: requireOwner,
   checkWrite: requireOwner,
   onSnapshot: async (ctx, id, snapshot) => {
-    await ctx.db.patch(id as Id<'documents'>, { content: snapshot });
+    await ctx.db.patch(id as Id<'documents'>, { content: snapshot, updated: Date.now() });
   }
 });

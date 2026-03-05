@@ -1,15 +1,20 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { type Document } from '@/convex/schema';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { ExternalLinkIcon, FilePenIcon, FileTextIcon, MoreHorizontalIcon, SaveIcon, TrashIcon } from 'lucide-react';
+import { ExternalLinkIcon, FilePenIcon, FileTextIcon, MoreHorizontalIcon, StarIcon, StarOffIcon, TrashIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { UpdateDialog } from './update-dialog';
 import { RemoveDialog } from './remove-dialog';
+import type { Document } from '@/convex/schema';
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { toast } from 'sonner';
 
-export function DocumentsTable({ documents }: { documents: Document[] }) {
+function DocumentRow({ document }: { document: Document }) {
   const router = useRouter();
+
+  const updateDocument = useMutation(api.documents.updateById);
 
   function openDocument(id: string) {
     router.push(`/documents/${id}`);
@@ -18,6 +23,94 @@ export function DocumentsTable({ documents }: { documents: Document[] }) {
   function openWindow(id: string) {
     window.open(`/documents/${id}`, '_blank');
   }
+
+  return (
+    <TableRow
+      key={document._id}
+      className="h-12 cursor-pointer p-20"
+    >
+      <TableCell
+        className="w-12.5 p-4"
+        onClick={() => openDocument(document._id)}
+      >
+        {document.starred ? <StarIcon className="text-yellow-500" /> : <FileTextIcon />}
+      </TableCell>
+      <TableCell
+        className="font-medium"
+        onClick={() => openDocument(document._id)}
+      >
+        <div className="w-35 max-w-120 md:w-fit truncate">{document.title}</div>
+      </TableCell>
+      <TableCell
+        className="text-muted-foreground hidden md:table-cell"
+        onClick={() => openDocument(document._id)}
+      >
+        {format(new Date(document._creationTime), 'MMM dd, yyyy')}
+      </TableCell>
+      <TableCell className="text-right">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 cursor-pointer"
+            >
+              <MoreHorizontalIcon />
+              <span className="sr-only">Open menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <UpdateDialog
+              id={document._id}
+              title={document.title}
+            >
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onSelect={(e) => e.preventDefault()}
+              >
+                <FilePenIcon />
+                Rename Document
+              </DropdownMenuItem>
+            </UpdateDialog>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={(e) => {
+                e.preventDefault();
+                updateDocument({ id: document._id, starred: !document.starred }).finally(() => {
+                  toast.success(document.starred ? 'Document removed from starred successfully.' : 'Document added to starred successfully.');
+                });
+              }}
+            >
+              {document.starred ? <StarOffIcon /> : <StarIcon />}
+              {document.starred ? 'Quit from Favorites' : 'Add to Favorites'}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => openWindow(document._id)}
+            >
+              <ExternalLinkIcon />
+              Open in a new Tab
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <RemoveDialog id={document._id}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onSelect={(e) => e.preventDefault()}
+              >
+                <TrashIcon />
+                Remove Document
+              </DropdownMenuItem>
+            </RemoveDialog>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </TableCell>
+    </TableRow>
+  );
+}
+
+export function DocumentsTable({ documents }: { documents: Document[] }) {
+  const starredDocuments = documents.filter((document) => document.starred);
+  const nonStarredDocuments = documents.filter((document) => !document.starred);
 
   return (
     <Table>
@@ -30,75 +123,11 @@ export function DocumentsTable({ documents }: { documents: Document[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {documents.map((document) => (
-          <TableRow
-            key={document._id}
-            className="h-12 cursor-pointer p-20"
-          >
-            <TableCell
-              className="w-12.5 p-4"
-              onClick={() => openDocument(document._id)}
-            >
-              <FileTextIcon />
-            </TableCell>
-            <TableCell
-              className="font-medium"
-              onClick={() => openDocument(document._id)}
-            >
-              <div className="w-35 max-w-120 md:w-fit truncate">{document.title}</div>
-            </TableCell>
-            <TableCell
-              className="text-muted-foreground hidden md:table-cell"
-              onClick={() => openDocument(document._id)}
-            >
-              {format(new Date(document._creationTime), 'MMM dd, yyyy')}
-            </TableCell>
-            <TableCell className="text-right">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="size-8 cursor-pointer"
-                  >
-                    <MoreHorizontalIcon />
-                    <span className="sr-only">Open menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <UpdateDialog
-                    id={document._id}
-                    title={document.title}
-                  >
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      onSelect={(e) => e.preventDefault()}
-                    >
-                      <FilePenIcon />
-                      Rename Document
-                    </DropdownMenuItem>
-                  </UpdateDialog>
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    onClick={() => openWindow(document._id)}
-                  >
-                    <ExternalLinkIcon />
-                    Open in a new Tab
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <RemoveDialog id={document._id}>
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      onSelect={(e) => e.preventDefault()}
-                    >
-                      <TrashIcon />
-                      Remove Document
-                    </DropdownMenuItem>
-                  </RemoveDialog>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </TableCell>
-          </TableRow>
+        {starredDocuments.map((document) => (
+          <DocumentRow document={document} />
+        ))}
+        {nonStarredDocuments.map((document) => (
+          <DocumentRow document={document} />
         ))}
       </TableBody>
     </Table>

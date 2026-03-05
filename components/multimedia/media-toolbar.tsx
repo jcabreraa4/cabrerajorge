@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Download, ExpandIcon, LucideIcon, PenIcon, SaveIcon, Star, TrashIcon } from 'lucide-react';
+import { CopyIcon, DownloadIcon, ExpandIcon, LucideIcon, PenIcon, SaveIcon, StarIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -50,7 +50,7 @@ function SectionButton({ onClick, icon: Icon, isActive }: SectionButtonProps) {
       variant={isActive ? 'default' : 'outline'}
       className="cursor-pointer"
     >
-      <Icon className="size-4" />
+      <Icon />
     </Button>
   );
 }
@@ -132,19 +132,24 @@ export function MediaToolbar({ file }: { file: UrlMediaFile }) {
 
   const sectionButtons = [
     {
-      icon: Star,
+      icon: StarIcon,
       onClick: () => updateFile({ id: file._id, starred: !file.starred }).finally(() => toast.success(file.starred ? 'File removed from starred successfully.' : 'File added to starred successfully.')),
       isActive: file.starred
     },
     {
-      icon: Copy,
+      icon: CopyIcon,
       onClick: () => copyText({ text: file.url!, type: 'link' })
     },
     {
-      icon: Download,
+      icon: DownloadIcon,
       onClick: () => mediaDownload(file.url!, file.name)
     }
   ];
+
+  function handleClick() {
+    if (!file._id) return;
+    router.push(`/multimedia/${file._id}`);
+  }
 
   return (
     <div className="flex gap-3">
@@ -157,7 +162,7 @@ export function MediaToolbar({ file }: { file: UrlMediaFile }) {
       <UpdateDialog file={file} />
       <SectionButton
         icon={ExpandIcon}
-        onClick={() => router.push(`/multimedia/${file._id}`)}
+        onClick={handleClick}
       />
     </div>
   );

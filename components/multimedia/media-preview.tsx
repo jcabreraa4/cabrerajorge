@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation';
 import { mediaType } from '@/utils/media-type';
 import { AudioRender, ImageRender, OtherRender, VideoRender } from './media-render';
 import { cn } from '@/lib/utils';
+import { Id } from '@/convex/_generated/dataModel';
 
 interface MediaPreviewProps {
-  id?: string;
+  id?: Id<'multimedia'>;
   src: string;
   name?: string;
   type: string;
@@ -21,10 +22,15 @@ export function MediaPreview({ id, src, name, type, interact = false }: MediaPre
 
   const fileType = mediaType(type);
 
+  function handleClick() {
+    if (!id) return;
+    router.push(`/multimedia/${id}`);
+  }
+
   return (
     <div
       className={cn('aspect-video rounded-md overflow-hidden relative border border-black bg-black', id && 'cursor-pointer')}
-      onClick={() => id && router.push(`/multimedia/${id}`)}
+      onClick={handleClick}
     >
       {fileType === 'image' ? (
         <ImageRender
