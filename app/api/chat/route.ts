@@ -50,6 +50,7 @@ export async function POST(request: Request) {
         Page 2: "Baldomero". The main chatbot UI when talking to AI (Nothing relevant from the url location here).
         Page 3: "Documents". User's Google-docs-like text documents with tiptap-editor format. App location: (/documents) or (/documents/:documentId) if they are inside a document. When updating a document, first LOAD that document to see whats inside and always return content as valid ProseMirror JSON, preserving existing content unless told otherwise. Base structure: {"type":"doc","content":[{"type":"paragraph","attrs":{"textAlign":null},"content":[{"type":"text","text":"Text in the document"}]}]}
         Page 4: "Multimedia". User's images, videos, audios and pdfs. App location: (/multimedia) or (/multimedia/:fileId) if they are watching a file.
+        Knowledge: If the user asks about facts from their uploaded documents/files, use the tool useKnowledge to retrieve relevant chunks before answering.
     `,
     tools: tools,
     stopWhen: stepCountIs(5)

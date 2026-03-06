@@ -141,6 +141,56 @@ export const tools = {
       }
     }
   }),
+
+  useKnowledge: tool({
+    description: `Search relevant user knowledge in embeddings by semantic similarity. Use this when the user asks about information that could be in uploaded or vectorized files.`,
+    inputSchema: z.object({
+      query: z.string().describe('Natural language query to search in embeddings.'),
+      limit: z.number().min(1).max(10).optional().describe('Maximum number of relevant chunks to return.')
+    }),
+    async execute({ query, limit }) {
+      try {
+        const { getToken } = await auth();
+        const token = await getToken({ template: 'convex' });
+        client.setAuth(token!);
+
+        const matches = await client.action(api.embeddings.search, {
+          content: query,
+          limit: limit ?? 5
+        });
+
+        if (!matches || matches.length === 0) {
+          return {
+            status: 200,
+            content: 'No relevant knowledge found.'
+          };
+        }
+
+        const knowledge = await Promise.all(
+          matches.map(async (match) => {
+            const embedding = await client.query(api.embeddings.getById, { id: match._id });
+            return embedding
+              ? {
+                  _id: embedding._id,
+                  content: embedding.content,
+                  score: match._score
+                }
+              : null;
+          })
+        );
+
+        return {
+          status: 200,
+          content: knowledge.filter((item) => item !== null)
+        };
+      } catch (error) {
+        return {
+          status: 500,
+          message: `Error searching user's knowledge: ${error}`
+        };
+      }
+    }
+  }),
   loadAllMultimedia: tool({
     description: `Load all media files in user's account.`,
     inputSchema: z.object(),
