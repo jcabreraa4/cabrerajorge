@@ -6,10 +6,10 @@ import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { UpdateDialog } from './update-dialog';
 import { RemoveDialog } from './remove-dialog';
-import type { Document } from '@/convex/schema';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { toast } from 'sonner';
+import type { Document } from '@/convex/schema';
 
 function DocumentRow({ document }: { document: Document }) {
   const router = useRouter();

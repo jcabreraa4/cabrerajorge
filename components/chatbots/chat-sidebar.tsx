@@ -3,15 +3,15 @@
 import { Button } from '@/components/ui/button';
 import { useLocation } from '@/hooks/use-location';
 import { cn } from '@/lib/utils';
-import { type LucideIcon, ImageIcon, MessageSquareIcon, PhoneCallIcon, SettingsIcon } from 'lucide-react';
+import { type LucideIcon, BrainIcon, ImageIcon, MessageSquareIcon, PhoneCallIcon } from 'lucide-react';
 import Link from 'next/link';
 
-type Section = {
+export type ChatSection = {
   url: string;
   icon: LucideIcon;
 };
 
-const sections: Section[] = [
+export const sections: ChatSection[] = [
   {
     url: '/baldomero',
     icon: MessageSquareIcon
@@ -25,8 +25,8 @@ const sections: Section[] = [
     icon: PhoneCallIcon
   },
   {
-    url: '/baldomero/settings',
-    icon: SettingsIcon
+    url: '/baldomero/knowledge',
+    icon: BrainIcon
   }
 ];
 

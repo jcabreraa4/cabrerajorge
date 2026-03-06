@@ -4,13 +4,14 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbS
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { BotIcon, ImageIcon, MessageSquareIcon, PhoneCallIcon, SettingsIcon } from 'lucide-react';
+import { BotIcon } from 'lucide-react';
 import { useChatHelperStore } from '@/store/helper-store';
-import Link from 'next/link';
 import { useLocation } from '@/hooks/use-location';
 import { useDevice } from '@/hooks/use-device';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { useRouter } from 'next/navigation';
+import { sections } from '@/components/chatbots/chat-sidebar';
+import Link from 'next/link';
 
 const chatbotPage = 'baldomero';
 
@@ -65,18 +66,14 @@ export function AppHeader() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="/baldomero">
-                <MessageSquareIcon />
-              </SelectItem>
-              <SelectItem value="/baldomero/images">
-                <ImageIcon />
-              </SelectItem>
-              <SelectItem value="/baldomero/assistant">
-                <PhoneCallIcon />
-              </SelectItem>
-              <SelectItem value="/baldomero/settings">
-                <SettingsIcon />
-              </SelectItem>
+              {sections.map((section) => (
+                <SelectItem
+                  key={section.url}
+                  value={section.url}
+                >
+                  <section.icon />
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         )
