@@ -7,6 +7,7 @@ import { embedMany } from 'ai';
 import { auth } from '@clerk/nextjs/server';
 import { ConvexHttpClient } from 'convex/browser';
 import { api } from '@/convex/_generated/api';
+import { embed } from 'ai';
 
 const client = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
@@ -91,4 +92,31 @@ export async function processText(text: string) {
       };
     }
   }
+}
+
+export async function searchEmbeddings(query: string, limit = 8): Promise<string | { success: false; message: string }> {
+  const { userId, getToken } = await auth();
+  if (!userId) {
+    return {
+      success: false,
+      message: 'Unauthorized'
+    };
+  }
+  const token = await getToken({ template: 'convex' });
+  client.setAuth(token!);
+  const { embedding } = await embed({
+    model: openai.embeddingModel('text-embedding-3-small'),
+    value: query
+  });
+  const results = await client.action(api.embeddings.search, {
+    vector: Array.from(embedding) as number[],
+    limit
+  });
+  if (!results?.length) return 'No relevant knowledge found.';
+  const chunks = await client.query(api.embeddings.getByIds, { ids: results.map((r) => r._id) });
+  const byId = new Map(chunks.filter(Boolean).map((c) => [c!._id, c!.content]));
+  return results
+    .map((r, i) => (byId.get(r._id) ? `[${i + 1}] (${r._score.toFixed(4)}) ${byId.get(r._id)}` : null))
+    .filter(Boolean)
+    .join('\n\n');
 }

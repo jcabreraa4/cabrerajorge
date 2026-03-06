@@ -5,7 +5,9 @@ import { openai } from '@ai-sdk/openai';
 import { auth } from '@clerk/nextjs/server';
 import { generateImage, tool } from 'ai';
 import { ConvexHttpClient } from 'convex/browser';
+import { tiptapToText, textToTiptap } from '@/lib/tiptap';
 import { z } from 'zod';
+import { searchEmbeddings } from '@/actions/embeddings';
 
 const client = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
@@ -37,9 +39,30 @@ export const tools = {
       }
     }
   }),
-  loadAllDocuments: tool({
+  loadKnowledge: tool({
+    description: `Search in knowledge base given a query.`,
+    inputSchema: z.object({
+      query: z.string().describe('The question or text to search semantically.'),
+      limit: z.number().min(1).max(20).optional().describe('Max number of chunks to retrieve.')
+    }),
+    async execute({ query, limit }) {
+      try {
+        const content = await searchEmbeddings(query, limit);
+        return {
+          status: 200,
+          content
+        };
+      } catch (error) {
+        return {
+          status: 500,
+          message: `Error loading embeddings: ${error}`
+        };
+      }
+    }
+  }),
+  loadDocuments: tool({
     description: `Load all text documents in user's account.`,
-    inputSchema: z.object(),
+    inputSchema: z.object({}),
     async execute() {
       try {
         const { getToken } = await auth();
@@ -54,18 +77,21 @@ export const tools = {
         }
         return {
           status: 200,
-          content: documents
+          content: documents.map((doc) => ({
+            ...doc,
+            content: tiptapToText(doc.content)
+          }))
         };
       } catch (error) {
         return {
           status: 500,
-          message: `Error loading user's documents: ${error}`
+          message: `Error loading documents: ${error}`
         };
       }
     }
   }),
-  loadOneDocument: tool({
-    description: `Load an specific document from user's account.`,
+  loadDocument: tool({
+    description: `Load a specific document given its ID.`,
     inputSchema: z.object({
       id: z.string().describe('The ID of the document to load.')
     }),
@@ -83,28 +109,32 @@ export const tools = {
         }
         return {
           status: 200,
-          content: document
+          content: {
+            ...document,
+            content: tiptapToText(document.content)
+          }
         };
       } catch (error) {
         return {
           status: 500,
-          message: `Error loading user's document: ${error}`
+          message: `Error loading document: ${error}`
         };
       }
     }
   }),
-  updateDocumentContent: tool({
-    description: `Update an specific document's content from user's account.`,
+  updateDocument: tool({
+    description: `Update a specific document's content from user's account.`,
     inputSchema: z.object({
-      id: z.string().describe('The ID of the document to load.'),
-      content: z.string().describe('The content of the document to update.')
+      id: z.string().describe('The ID of the document to update.'),
+      content: z.string().describe('The new plain text content of the document.')
     }),
     async execute({ id, content }) {
       try {
         const { getToken } = await auth();
         const token = await getToken({ template: 'convex' });
         client.setAuth(token!);
-        await client.action(api.documents.updateWithAI, { id: id as Id<'documents'>, content });
+        const tiptapContent = textToTiptap(content);
+        await client.action(api.documents.updateWithAI, { id: id as Id<'documents'>, content: tiptapContent });
         return {
           status: 200,
           message: 'Document updated successfully.'
@@ -112,36 +142,12 @@ export const tools = {
       } catch (error) {
         return {
           status: 500,
-          message: `Error updating user's document: ${error}`
+          message: `Error updating document: ${error}`
         };
       }
     }
   }),
-  updateDocumentTitle: tool({
-    description: `Update an specific document's title from user's account.`,
-    inputSchema: z.object({
-      id: z.string().describe('The ID of the document to load.'),
-      title: z.string().describe('The title of the document to update.')
-    }),
-    async execute({ id, title }) {
-      try {
-        const { getToken } = await auth();
-        const token = await getToken({ template: 'convex' });
-        client.setAuth(token!);
-        await client.mutation(api.documents.updateById, { id: id as Id<'documents'>, title });
-        return {
-          status: 200,
-          message: 'Document updated successfully.'
-        };
-      } catch (error) {
-        return {
-          status: 500,
-          message: `Error updating user's document: ${error}`
-        };
-      }
-    }
-  }),
-  loadAllMultimedia: tool({
+  loadMediaFiles: tool({
     description: `Load all media files in user's account.`,
     inputSchema: z.object(),
     async execute() {
@@ -149,8 +155,8 @@ export const tools = {
         const { getToken } = await auth();
         const token = await getToken({ template: 'convex' });
         client.setAuth(token!);
-        const multimedia = await client.query(api.multimedia.getAll);
-        if (!multimedia || multimedia.length === 0) {
+        const mediaFiles = await client.query(api.multimedia.getAll);
+        if (!mediaFiles || mediaFiles.length === 0) {
           return {
             status: 200,
             content: 'No media files found.'
@@ -158,12 +164,41 @@ export const tools = {
         }
         return {
           status: 200,
-          content: multimedia
+          content: mediaFiles
         };
       } catch (error) {
         return {
           status: 500,
-          message: `Error loading user's media files: ${error}`
+          message: `Error loading media files: ${error}`
+        };
+      }
+    }
+  }),
+  loadMediaFile: tool({
+    description: `Load an specific media file given its ID.`,
+    inputSchema: z.object({
+      id: z.string().describe('The ID of the media file to load.')
+    }),
+    async execute({ id }) {
+      try {
+        const { getToken } = await auth();
+        const token = await getToken({ template: 'convex' });
+        client.setAuth(token!);
+        const mediaFile = await client.query(api.multimedia.getById, { id: id as Id<'multimedia'> });
+        if (!mediaFile) {
+          return {
+            status: 200,
+            content: 'No media file found.'
+          };
+        }
+        return {
+          status: 200,
+          content: mediaFile
+        };
+      } catch (error) {
+        return {
+          status: 500,
+          message: `Error loading media file: ${error}`
         };
       }
     }

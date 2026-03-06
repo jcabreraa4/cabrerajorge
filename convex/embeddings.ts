@@ -12,10 +12,20 @@ export const getAll = query({
   }
 });
 
+export const getByIds = query({
+  args: { ids: v.array(v.id('embeddings')) },
+  handler: async (ctx, args) => {
+    const user = await ctx.auth.getUserIdentity();
+    if (!user) throw new ConvexError('Unauthorized');
+    const embeddings = await Promise.all(args.ids.map((id) => ctx.db.get(id)));
+    return embeddings.filter((embedding) => embedding && embedding.owner === user.subject);
+  }
+});
+
 export const create = mutation({
   args: {
     content: v.string(),
-    vector: v.array(v.number())
+    vector: v.array(v.float64())
   },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
@@ -54,6 +64,18 @@ export const deleteById = mutation({
 });
 
 export const search = action({
-  args: { content: v.string() },
-  handler: async (ctx, args) => {}
+  args: {
+    vector: v.array(v.float64()),
+    limit: v.optional(v.number())
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.auth.getUserIdentity();
+    if (!user) throw new ConvexError('Unauthorized');
+    const matches = await ctx.vectorSearch('embeddings', 'by_vector', {
+      vector: args.vector,
+      limit: args.limit ?? 8,
+      filter: (q) => q.eq('owner', user.subject)
+    });
+    return matches;
+  }
 });

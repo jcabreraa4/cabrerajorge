@@ -193,7 +193,7 @@ export function ChatMessages({ messages, status, regenerate, lastInput }: ChatMe
                       )}
                     </Fragment>
                   );
-                } else if (part.type === 'tool-loadAllDocuments' || part.type === 'tool-loadOneDocument' || part.type === 'tool-updateDocumentContent' || part.type === 'tool-updateDocumentTitle' || part.type === 'tool-loadAllMultimedia') {
+                } else if (part.type === 'tool-loadKnowledge' || part.type === 'tool-loadDocuments' || part.type === 'tool-loadDocument' || part.type === 'tool-updateDocument' || part.type === 'tool-loadMediaFiles' || part.type === 'tool-loadMediaFile') {
                   return (
                     <Tool key={`${message.id}-${partIndex}`}>
                       <ToolHeader
