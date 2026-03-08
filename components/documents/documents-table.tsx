@@ -25,10 +25,7 @@ function DocumentRow({ document }: { document: Document }) {
   }
 
   return (
-    <TableRow
-      key={document._id}
-      className="h-12 cursor-pointer p-20"
-    >
+    <TableRow className="h-12 cursor-pointer p-20">
       <TableCell
         className="w-12.5 p-4"
         onClick={() => openDocument(document._id)}
@@ -124,10 +121,10 @@ export function DocumentsTable({ documents }: { documents: Document[] }) {
       </TableHeader>
       <TableBody>
         {starredDocuments.map((document) => (
-          <DocumentRow document={document} />
+          <DocumentRow key={document._id} document={document} />
         ))}
         {nonStarredDocuments.map((document) => (
-          <DocumentRow document={document} />
+          <DocumentRow key={document._id} document={document} />
         ))}
       </TableBody>
     </Table>
