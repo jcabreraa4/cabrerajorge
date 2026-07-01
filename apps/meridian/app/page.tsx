@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <main className="flex h-screen w-full flex-col items-center justify-center gap-3 p-3 md:p-5">
       <SettingsIcon className="size-14" />
-      <p className="text-2xl font-semibold">[ Landing ] CabreraJorge</p>
+      <p className="text-2xl font-semibold">[ Meridian ] CabreraJorge</p>
     </main>
   );
 }
