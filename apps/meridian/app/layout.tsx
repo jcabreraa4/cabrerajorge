@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
+import { Analytics } from '@vercel/analytics/next';
+
 import '@workspace/ui/globals.css';
 import { cn } from '@workspace/ui/lib/utils';
 
@@ -32,7 +34,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       className={cn('antialiased', fontMono.variable, 'font-sans', geist.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
