@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
+import { Analytics } from '@vercel/analytics/next';
+
 import { Toaster } from '@workspace/ui/components/toast';
 import { TooltipProvider } from '@workspace/ui/components/tooltip';
 import '@workspace/ui/globals.css';
@@ -40,6 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <TooltipProvider>
             <Toaster />
             {children}
+            <Analytics />
           </TooltipProvider>
         </ThemeProvider>
       </body>
