@@ -3,7 +3,7 @@ import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { prettyJSON } from 'hono/pretty-json';
 
-import { auth } from '@/lib/auth';
+/* import { auth } from '@/lib/auth'; */
 
 const app = new Hono();
 
@@ -30,9 +30,9 @@ app.get('/health', (c) => {
   return c.json({ status: 'OK' }, { status: 200 });
 });
 
-app.on(['POST', 'GET'], '/api/auth/*', (c) => {
+/* app.on(['POST', 'GET'], '/api/auth/*', (c) => {
   return auth.handler(c.req.raw);
-});
+}); */
 
 app.notFound((c) => {
   return c.text('Not Found', { status: 404 });
