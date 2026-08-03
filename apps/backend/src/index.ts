@@ -1,9 +1,42 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { logger } from 'hono/logger';
+import { prettyJSON } from 'hono/pretty-json';
 
-const app = new Hono()
+import { auth } from '@/lib/auth';
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono();
 
-export default app
+// Middlewares
+
+app.use(
+  cors({
+    origin: ['http://localhost:3000'], // Allowed request origins
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed request methods
+    allowHeaders: ['Content-Type', 'Authorization'], // Allowed request headers
+    credentials: true, // Allow cookies and credentials (Auth related)
+    maxAge: 600 // Cache preflight options (Origins, methods, headers)
+  })
+);
+
+app.use(logger()); // Logs every request
+app.use(prettyJSON()); // Pretty responses - On demand (?pretty)
+
+// Routes
+
+app.get('/', (c) => c.text('CabreraJorge API'));
+
+app.get('/health', (c) => {
+  return c.json({ status: 'OK' }, { status: 200 });
+});
+
+app.on(['POST', 'GET'], '/api/auth/*', (c) => {
+  return auth.handler(c.req.raw);
+});
+
+app.notFound((c) => {
+  return c.text('Not Found', { status: 404 });
+});
+
+// Server
+export default app;
