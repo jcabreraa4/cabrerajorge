@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun run --hot --port 3002 src/index.ts",
+    "dev": "bun --hot --port 3002 src/index.ts",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
@@ -20,7 +20,7 @@
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
     "drizzle-kit": "^1.0.0-rc.4",
-    "eslint": "^9",
-    "typescript": "^5"
+    "eslint": "^10",
+    "typescript": "^7"
   }
 }
