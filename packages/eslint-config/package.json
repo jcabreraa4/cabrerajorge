@@ -20,6 +20,7 @@
   },
   "exports": {
     "./base": "./base.js",
+    "./eve": "./eve.js",
     "./hono": "./hono.js",
     "./nextjs": "./next.js",
     "./react-internal": "./react-internal.js"
