@@ -7,10 +7,12 @@
     "#evals/*": "./evals/*"
   },
   "scripts": {
-    "build": "eve build",
     "dev": "eve dev",
+    "build": "eve build",
     "start": "eve start",
-    "typecheck": "tsc"
+    "lint": "eslint",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@vercel/connect": "0.4.3",
