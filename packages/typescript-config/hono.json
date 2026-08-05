@@ -3,11 +3,11 @@
   "display": "Hono",
   "extends": "./base.json",
   "compilerOptions": {
-    "types": ["bun"],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "noEmit": true
+    "noEmit": true,
+    "types": ["bun"]
   }
 }
