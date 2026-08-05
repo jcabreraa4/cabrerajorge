@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 import { config as baseConfig } from './base.js';
 
 /**
- * A custom ESLint configuration for libraries that use Hono.
+ * A custom ESLint configuration for libraries that use Eve.
  *
  * @type {import("eslint").Linter.Config}
  *
