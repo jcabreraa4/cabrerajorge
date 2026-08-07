@@ -3,15 +3,17 @@ import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { prettyJSON } from 'hono/pretty-json';
 
-/* import { auth } from '@/lib/auth'; */
+import { auth } from '@/lib/auth';
 
 const app = new Hono();
+
+const origins = process.env.ALLOWED_ORIGINS!.split(',');
 
 // Middlewares
 
 app.use(
   cors({
-    origin: ['http://localhost:3000'], // Allowed request origins
+    origin: origins, // Allowed request origins
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed request methods
     allowHeaders: ['Content-Type', 'Authorization'], // Allowed request headers
     credentials: true, // Allow cookies and credentials (Auth related)
@@ -30,9 +32,9 @@ app.get('/health', (c) => {
   return c.json({ status: 'OK' }, { status: 200 });
 });
 
-/* app.on(['POST', 'GET'], '/api/auth/*', (c) => {
+app.on(['POST', 'GET'], '/auth/*', (c) => {
   return auth.handler(c.req.raw);
-}); */
+});
 
 app.notFound((c) => {
   return c.text('Not Found', { status: 404 });
