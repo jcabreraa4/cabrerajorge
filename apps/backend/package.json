@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "bun run db:start && trap 'bun run db:stop' EXIT; bun --hot --port 3002 src/index.ts",
+    "start": "bun src/index.ts",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",

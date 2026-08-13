@@ -20,6 +20,13 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "deploy": {
+      "cache": false
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
     }
   }
 }
