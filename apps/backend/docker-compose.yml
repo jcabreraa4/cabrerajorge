@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: cabrerajorge-database-container
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cabrerajorge
+    ports:
+      - '5432:5432'
+    volumes:
+      - cabrerajorge_database_volume:/var/lib/postgresql
+
+volumes:
+  cabrerajorge_database_volume:
+    name: cabrerajorge_database_volume

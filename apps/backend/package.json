@@ -4,20 +4,25 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --hot --port 3002 src/index.ts",
+    "dev": "bun run db:start && trap 'bun run db:stop' EXIT; bun --hot --port 3002 src/index.ts",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:push": "bunx drizzle-kit push",
+    "db:start": "docker compose up -d",
+    "db:stop": "docker compose stop",
+    "db:down": "docker compose down -v"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.1.0",
     "better-auth": "^1.6.26",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.13.1",
+    "pg": "^8.23.0",
     "zod": "4.4.3"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/pg": "^8.21.0",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
     "dotenv": "^17.4.2",
