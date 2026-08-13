@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/node": "24.x",
     "eslint": "^10",
-    "typescript": "^7"
+    "typescript": "^6"
   },
   "imports": {
     "#*": "./agent/*",
