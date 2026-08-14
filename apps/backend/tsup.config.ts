@@ -9,5 +9,5 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   dts: false,
-  noExternal: [/@workspace\//] // bundlea tus paquetes internos del monorepo (ui, etc. si los importas)
+  noExternal: [/@workspace\//]
 });
