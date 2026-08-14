@@ -4,14 +4,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun db:start && trap 'bun db:stop' EXIT; tsx watch --env-file=.env.local src/index.ts",
-    "build": "tsup && tsup && bunx drizzle-kit push",
+    "dev": "concurrently -n docker,server,studio -c blue,magenta,green \"docker compose up\" \"tsx watch --env-file=.env.local src/index.ts\" \"bunx drizzle-kit studio\"",
+    "build": "tsup",
     "start": "node dist/index.js",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit",
-    "db:start": "docker compose up -d",
-    "db:stop": "docker compose stop"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
@@ -26,6 +24,7 @@
     "@types/pg": "^8.21.0",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
+    "concurrently": "^10.0.4",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
     "eslint": "^10",
