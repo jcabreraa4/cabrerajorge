@@ -22,7 +22,10 @@ const fontMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Jorge Cabrera',
-  description: 'Jorge Cabrera'
+  description: 'Jorge Cabrera',
+  icons: {
+    icon: '/icon.webp'
+  }
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
