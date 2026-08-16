@@ -42,12 +42,12 @@ app.notFound((c) => {
   return c.text('Not Found', { status: 404 });
 });
 
+// Serve App
+
 serve(
   {
     fetch: app.fetch,
     port: port
   },
-  (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`);
-  }
+  () => console.log(`Server is up and running on http://localhost:${port}`)
 );
