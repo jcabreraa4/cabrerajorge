@@ -1,3 +1,6 @@
-# Backend
+# Backend App
 
-> Hono app deployed on VPS.
+> Hono app.
+> Nodejs runtime.
+> Bun package manager.
+> Deployed on VPS.
