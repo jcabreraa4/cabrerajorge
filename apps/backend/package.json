@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently -n docker,server,studio -c blue,magenta,green \"docker compose up\" \"tsx watch --env-file=.env.local src/index.ts\" \"bunx drizzle-kit studio\"",
+    "build": "tsup",
+    "start": "bunx drizzle-kit push && node dist/index.js",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
