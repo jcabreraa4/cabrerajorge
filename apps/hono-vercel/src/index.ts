@@ -1,14 +1,9 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono';
 
-const app = new Hono()
-
-const welcomeStrings = [
-  'Hello Hono!',
-  'To learn more about Hono on Vercel, visit https://vercel.com/docs/frameworks/backend/hono'
-]
+const app = new Hono();
 
 app.get('/', (c) => {
-  return c.text(welcomeStrings.join('\n\n'))
-})
+  return c.text('Hello Hono!');
+});
 
-export default app
+export default app;
