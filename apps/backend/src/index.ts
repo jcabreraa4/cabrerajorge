@@ -49,5 +49,5 @@ serve(
     fetch: app.fetch,
     port: port
   },
-  () => console.log(`Server is up and running on http://localhost:${port}`)
+  () => console.log(`Hono Server is up and running on http://localhost:${port}`)
 );
