@@ -1,7 +1,10 @@
 {
   "name": "backend",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "concurrently -n docker,server,studio -c blue,magenta,green \"docker compose up\" \"bun --hot src/index.ts\" \"bunx drizzle-kit studio\"",
+    "dev": "concurrently -n docker,server,studio -c blue,magenta,green \"docker compose up\" \"bun --hot --port 3002 src/index.ts\" \"bunx drizzle-kit studio\"",
     "build": "tsdown",
     "start": "bunx drizzle-kit push && bun dist/index.js",
     "lint": "eslint",
