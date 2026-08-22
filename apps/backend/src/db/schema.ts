@@ -95,6 +95,6 @@ export const accountRelations = relations(account, ({ one }) => ({
   })
 }));
 
-// Database Schema
+// Export Schema
 
-export const schema = { user, session, account, verification };
+export * as schema from '@/db/schema';
