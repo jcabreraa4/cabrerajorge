@@ -1,4 +1,3 @@
-import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
@@ -8,7 +7,6 @@ import { auth } from '@/lib/auth';
 
 const app = new Hono();
 
-const port = Number(process.env.PORT);
 const origins = process.env.ALLOWED_ORIGINS!.split(',');
 
 // Middlewares
@@ -44,10 +42,4 @@ app.notFound((c) => {
 
 // Serve App
 
-serve(
-  {
-    fetch: app.fetch,
-    port: port
-  },
-  () => console.log(`Hono Server is up and running on http://localhost:${port}`)
-);
+export default app;

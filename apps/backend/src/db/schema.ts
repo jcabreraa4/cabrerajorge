@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { boolean, index, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 
-// Auth Tables
+// Better Auth
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -75,8 +75,6 @@ export const verification = pgTable(
   },
   (table) => [index('verification_identifier_idx').on(table.identifier)]
 );
-
-// Auth Relations
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),

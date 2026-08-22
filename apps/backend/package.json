@@ -1,18 +1,14 @@
 {
   "name": "backend",
-  "version": "0.0.1",
-  "type": "module",
-  "private": true,
   "scripts": {
-    "dev": "concurrently -n docker,server,studio -c blue,magenta,green \"docker compose up\" \"tsx watch --env-file=.env.local src/index.ts\" \"bunx drizzle-kit studio\"",
-    "build": "tsup",
-    "start": "bunx drizzle-kit push && node dist/index.js",
+    "dev": "concurrently -n docker,server,studio -c blue,magenta,green \"docker compose up\" \"bun --hot src/index.ts\" \"bunx drizzle-kit studio\"",
+    "build": "tsdown",
+    "start": "bunx drizzle-kit push && bun dist/index.js",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@hono/node-server": "^2.1.1",
     "better-auth": "^1.7.1",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.13.3",
@@ -20,16 +16,15 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^26.2.0",
-    "@types/pg": "^8.21.0",
+    "@types/bun": "^1.4.0",
+    "@types/pg": "^8.23.1",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
-    "concurrently": "^10.0.4",
+    "concurrently": "^10.0.5",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
     "eslint": "^10",
-    "tsup": "^8.5.1",
-    "tsx": "^4.23.12",
+    "tsdown": "^0.22.14",
     "typescript": "^6"
   }
 }

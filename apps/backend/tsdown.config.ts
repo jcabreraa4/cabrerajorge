@@ -1,13 +1,11 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
 export default defineConfig({
   entry: ['src/index.ts'],
-  format: ['esm'],
+  format: 'esm',
   target: 'es2022',
   outDir: 'dist',
   clean: true,
-  splitting: false,
   sourcemap: true,
-  dts: false,
-  noExternal: [/@workspace\//]
+  dts: false
 });
