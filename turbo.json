@@ -3,10 +3,18 @@
   "ui": "tui",
   "globalEnv": ["COOKIE_DOMAIN", "ALLOWED_ORIGINS", "DATABASE_URL", "BETTER_AUTH_URL", "BETTER_AUTH_SECRET"],
   "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -16,17 +24,6 @@
     },
     "typecheck": {
       "dependsOn": ["^typecheck"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "deploy": {
-      "cache": false
-    },
-    "start": {
-      "cache": false,
-      "persistent": true
     }
   }
 }

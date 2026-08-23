@@ -12,7 +12,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "ai": "^7.0.77",
     "better-auth": "^1.7.1",
+    "chat": "^4.38.1",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.13.3",
     "pg": "^8.23.0",
