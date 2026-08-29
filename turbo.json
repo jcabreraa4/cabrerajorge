@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalEnv": ["COOKIE_DOMAIN", "ALLOWED_ORIGINS", "DATABASE_URL", "BETTER_AUTH_URL", "BETTER_AUTH_SECRET"],
+  "globalEnv": ["ALLOWED_ORIGINS", "DATABASE_URL"],
   "tasks": {
     "dev": {
       "cache": false,
