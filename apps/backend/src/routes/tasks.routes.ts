@@ -1,4 +1,6 @@
+import { sValidator } from '@hono/standard-validator';
 import { Hono } from 'hono';
+import { z } from 'zod';
 
 import { createTask, listTasks } from '@/controllers/auth.controller';
 
@@ -12,23 +14,32 @@ router.get('/', async (c) => {
 
 // Get Task
 router.get('/:id', (c) => {
-  return c.text('Get task');
+  const { id } = c.req.param();
+  return c.text(`Get task ${id}`);
 });
 
 // Create Task
-router.post('/', (c) => {
+
+export const createTaskSchema = z.object({
+  name: z.string(),
+  note: z.string()
+});
+
+router.post('/', sValidator('json', createTaskSchema), (c) => {
   const task = createTask({ name: 'Task name', note: 'Task note' });
   return c.json(task);
 });
 
 // Update Task
 router.put('/:id', (c) => {
-  return c.text('Update task');
+  const { id } = c.req.param();
+  return c.text(`Update task ${id}`);
 });
 
 // Delete Task
 router.delete('/:id', (c) => {
-  return c.text('Delete task');
+  const { id } = c.req.param();
+  return c.text(`Delete task ${id}`);
 });
 
 export { router as tasksRoutes };

@@ -1,7 +1,3 @@
-import { integer, pgTable, text, varchar } from 'drizzle-orm/pg-core';
+import { tasks } from '@/db/schema/tasks';
 
-export const tasks = pgTable('tasks', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar().notNull(),
-  note: text()
-});
+export const schema = { tasks };
