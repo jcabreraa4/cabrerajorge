@@ -1,7 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalEnv": ["ALLOWED_ORIGINS", "DATABASE_URL"],
+  "globalEnv": ["NEXT_RUNTIME", "CI"],
+  "globalPassThroughEnv": ["ALLOWED_ORIGINS", "DATABASE_URL"],
   "tasks": {
     "dev": {
       "cache": false,

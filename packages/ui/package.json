@@ -17,8 +17,8 @@
     "@shadcn/react": "catalog:",
     "@tanstack/react-table": "catalog:",
     "class-variance-authority": "catalog:",
-    "clsx": "catalog:",
     "cmdk": "catalog:",
+    "cn": "catalog:",
     "date-fns": "catalog:",
     "embla-carousel-react": "catalog:",
     "input-otp": "catalog:",
@@ -31,7 +31,6 @@
     "recharts": "catalog:",
     "shadcn": "catalog:",
     "sonner": "catalog:",
-    "tailwind-merge": "catalog:",
     "tw-animate-css": "catalog:",
     "zod": "catalog:"
   },
@@ -44,6 +43,7 @@
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "eslint": "catalog:",
+    "postcss-load-config": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
