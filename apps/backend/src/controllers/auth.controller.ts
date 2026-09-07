@@ -1,7 +1,7 @@
 import type z from 'zod';
 
 import { db } from '@/db';
-import { tasks } from '@/db/schema';
+import { tasks } from '@/db/schema/tasks';
 import type { createTaskSchema } from '@/routes/tasks.routes';
 
 export async function listTasks() {
