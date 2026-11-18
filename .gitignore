@@ -25,12 +25,6 @@ logs/
 npm-debug.log*
 pnpm-debug.log*
 
-# Editors
-.vscode/*
-!.vscode/launch.json
-!.vscode/*.code-snippets
-.idea/
-
 # OS / Misc
 .DS_Store
 *.pem
