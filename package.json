@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n css,worker \"tailwindcss -i src/globals.css -o public/styles.css --watch=always\" \"wrangler dev --port 3001 --live-reload\"",
-    "build": "mkdir -p public && tailwindcss -i src/globals.css -o public/styles.css --minify",
+    "dev": "concurrently -k -n tailwind,wrangler -c \"#38bdf8,#f6821f\" \"tailwindcss -i src/globals.css -o public/styles.css --watch=always\" \"wrangler dev --port 3001 --live-reload\"",
+    "build": "tailwindcss -i src/globals.css -o public/styles.css --minify",
     "lint": "biome lint",
     "format": "biome format --write",
     "typecheck": "tsc --noEmit",
@@ -28,6 +28,6 @@
     "tsx": "^4.23.15",
     "typed-htmx": "^0.3.1",
     "typescript": "^7.0.2",
-    "wrangler": "^4.110.0"
+    "wrangler": "^4.164.0"
   }
 }
