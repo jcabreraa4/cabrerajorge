@@ -21,6 +21,11 @@ export const Layout: FC<PropsWithChildren<{ title?: string }>> = ({ title, child
         rel="stylesheet"
         href="/styles.css"
       />
+      {/* JS Scripts */}
+      <script
+        src="/htmx.min.js"
+        defer
+      ></script>
     </head>
     <body>{children}</body>
   </html>
