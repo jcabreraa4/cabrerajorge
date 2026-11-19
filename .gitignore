@@ -28,3 +28,6 @@ pnpm-debug.log*
 # OS / Misc
 .DS_Store
 *.pem
+
+# Generated CSS
+public/styles.css
