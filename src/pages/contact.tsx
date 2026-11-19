@@ -2,7 +2,7 @@ import { Layout } from '@/components/layout';
 
 function Page() {
   return (
-    <Layout>
+    <Layout className="h-full p-5">
       <h1>Contact Page</h1>
     </Layout>
   );

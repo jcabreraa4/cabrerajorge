@@ -1,7 +1,15 @@
 import type { FC, PropsWithChildren } from 'hono/jsx';
 
-export const Layout: FC<PropsWithChildren<{ title?: string }>> = ({ title, children }) => (
-  <html lang="es">
+interface LayoutProps {
+  title?: string;
+  className?: string;
+}
+
+export const Layout: FC<PropsWithChildren<LayoutProps>> = ({ children, title, className }) => (
+  <html
+    lang="es"
+    data-theme="light"
+  >
     <head>
       {/* Meta Tags */}
       <meta charset="utf-8" />
@@ -27,6 +35,6 @@ export const Layout: FC<PropsWithChildren<{ title?: string }>> = ({ title, child
         defer
       ></script>
     </head>
-    <body>{children}</body>
+    <body className={className}>{children}</body>
   </html>
 );

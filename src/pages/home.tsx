@@ -2,17 +2,18 @@ import { Layout } from '@/components/layout';
 
 function Page() {
   return (
-    <Layout>
-      <h1 className="font-black text-red-500">Home Page</h1>
-      <button
-        type="button"
-        class="btn btn-primary"
-        hx-get="/api/time"
-        hx-target="#output"
-      >
-        Hora del servidor
-      </button>
-      <span id="output" />
+    <Layout className="h-full p-5">
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          class="border rounded-lg px-3 py-1 bg-black text-white cursor-pointer"
+          hx-get="/api/time"
+          hx-target="#output"
+        >
+          Server Time
+        </button>
+        <span id="output" />
+      </div>
     </Layout>
   );
 }
