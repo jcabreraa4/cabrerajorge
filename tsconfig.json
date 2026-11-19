@@ -3,7 +3,6 @@
     // Language & Output
     "target": "ESNext",
     "lib": ["ESNext"],
-    "noEmit": true,
 
     // Module Resolution
     "module": "ESNext",

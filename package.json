@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --port 3001",
+    "dev": "concurrently -k -n css,worker \"tailwindcss -i src/globals.css -o public/styles.css --watch=always\" \"wrangler dev --port 3001 --live-reload\"",
+    "build": "mkdir -p public && tailwindcss -i src/globals.css -o public/styles.css --minify",
     "lint": "biome lint",
     "format": "biome format --write",
     "typecheck": "tsc --noEmit",
-    "deploy": "wrangler deploy --minify",
+    "deploy": "pnpm run build && wrangler deploy --minify",
     "typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
@@ -20,11 +21,13 @@
   "devDependencies": {
     "@biomejs/biome": "^2.6.8",
     "@tailwindcss/cli": "^4.3.5",
+    "concurrently": "^10.0.7",
     "drizzle-kit": "1.0.0-rc.5",
     "knip": "^6.45.1",
     "tailwindcss": "^4.3.5",
     "tsx": "^4.23.15",
     "typed-htmx": "^0.3.1",
+    "typescript": "^7.0.2",
     "wrangler": "^4.110.0"
   }
 }
