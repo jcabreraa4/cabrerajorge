@@ -1,6 +1,8 @@
-onlyBuiltDependencies:
-  - esbuild
-  - workerd
 allowBuilds:
   esbuild: true
   workerd: true
+
+  # Tailwind CSS
+  "@parcel/watcher": true
+skills:
+  dirs: []

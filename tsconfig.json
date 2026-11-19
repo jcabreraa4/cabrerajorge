@@ -1,12 +1,24 @@
 {
   "compilerOptions": {
+    // Language & Output
     "target": "ESNext",
+    "lib": ["ESNext"],
+    "noEmit": true,
+
+    // Module Resolution
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    // Hono JSX
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+
+    // Type Checking
     "strict": true,
     "skipLibCheck": true,
-    "lib": ["ESNext"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "verbatimModuleSyntax": true
   }
 }
