@@ -1,6 +1,6 @@
 # CabreraJorge
 
-> Open-source infrastructure.
+> Personal Infrastructure
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Pnpm](https://img.shields.io/badge/pnpm-Package%20Manager-F69220?logo=pnpm&logoColor=white)](https://pnpm.io)
