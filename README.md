@@ -25,11 +25,11 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 
 ## Stack
 
-- **Hono** — lightweight, fast server framework with typed JSX.
-- **Cloudflare Workers** — edge hosting with generous free tier.
-- **Tailwind CSS 4 + daisyUI** — utility-first styling with ready components.
-- **Biome** — lint and format in a single tool.
-- **pnpm** — fast, strict package management.
+- **Hono** — Lightweight, fast server framework with typed JSX.
+- **Cloudflare Workers** — Edge hosting with generous free tier.
+- **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready components.
+- **Biome** — Lint and format in a single tool.
+- **PNPM** — Fast, strict package management.
 
 ## Getting Started
 
