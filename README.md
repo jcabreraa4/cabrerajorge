@@ -11,7 +11,7 @@
 [![Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflareworkers&logoColor=white)](https://workers.cloudflare.com)
 [![D1](https://img.shields.io/badge/D1-Database-F38020?logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/d1)
 [![Biome](https://img.shields.io/badge/Biome-Lint%20%26%20Format-EFEFEF?logo=biome&logoColor=white)](https://biomejs.dev)
-[![BetterAuth](https://img.shields.io/badge/BetterAuth-Auth-EF4444)](https://www.better-auth.com)
+[![BetterAuth](https://img.shields.io/badge/BetterAuth-Auth-EF4444?logo=betterauth&logoColor=white)](https://www.better-auth.com)
 [![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?logo=drizzle&logoColor=white)](https://orm.drizzle.team)
 [![ORPC](https://img.shields.io/badge/ORPC-API-EF4444)](https://orpc.dev)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-EFEFEF?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
