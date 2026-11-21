@@ -40,12 +40,6 @@ cp .env.example .env  # set up environment variables
 pnpm dev              # dev server at localhost:3001
 ```
 
-Deploy to Cloudflare:
-
-```bash
-pnpm deploy
-```
-
 ## Roadmap
 
 - [ ] Backend API with Better Auth, Drizzle ORM, oRPC and D1 at `api.cabrerajorge.com`.
