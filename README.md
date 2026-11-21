@@ -1,4 +1,6 @@
-# CabreraJorge
+<h1 align="left">
+  <img src="public/logo.webp" alt="CabreraJorge logo" width="60" align="absmiddle"> CabreraJorge
+</h1>
 
 > Personal Infrastructure
 
