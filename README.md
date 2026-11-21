@@ -28,7 +28,7 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 - **Hono** — Lightweight, fast server framework with typed JSX.
 - **PNPM** — Fast, strict package manager with a tight, reproducible lockfile.
 - **TypeScript** — Static typing across the app, giving end-to-end type safety.
-- **Cloudflare Workers** — Serverless compute at the edge, running on V8 isolates across a global network.
+- **Cloudflare Workers** — Serverless compute on V8 isolates at the edge.
 - **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready components.
 - **Biome** — Lint and format in one fast, consistent tool.
 
