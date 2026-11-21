@@ -26,6 +26,7 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 ## Stack
 
 - **Hono** — Lightweight, fast server framework with typed JSX.
+- **TypeScript** — Static typing across the whole app.
 - **Cloudflare Workers** — Edge hosting with generous free tier.
 - **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready components.
 - **Biome** — Lint and format in a single tool.
