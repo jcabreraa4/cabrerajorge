@@ -53,10 +53,10 @@ pnpm dev              # dev server at localhost:3001
 
 ## Roadmap
 
-- [ ] Backend API with Better Auth, Drizzle ORM, oRPC and D1 at `api.cabrerajorge.com`.
+- [ ] Backend API with Better Auth, Drizzle ORM, oRPC and D1 at `cabrerajorge.com` — the backend and the landing are the same app: the backend serves the landing via HTMX.
 - [ ] Personal MCP server: agents feed on their own data, stored per-user in D1.
 - [ ] Monorepo with Turborepo + pnpm (`apps/backend`, `apps/private`).
-- [ ] Private app with TanStack Start at `app.cabrerajorge.com`.
+- [ ] Private app with TanStack Start at `app.cabrerajorge.com` — a personal UI consuming the backend API.
 
 ---
 
