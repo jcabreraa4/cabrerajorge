@@ -32,15 +32,15 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 ## Stack
 
 - **Hono** — Lightweight, fast server framework with typed JSX.
-- **Better Auth** — Authentication library with type-safe sessions and first-class Workers support.
+- **Better Auth** — Type-safe authentication with first-class Workers support.
 - **Drizzle** — Type-safe SQL ORM with a lightweight schema-first design.
-- **oRPC** — End-to-end type-safe RPC layer built on Web Standards.
+- **oRPC** — Type-safe RPC layer built on Web Standards, end to end.
 - **PNPM** — Fast, strict package manager with a tight, reproducible lockfile.
 - **TypeScript** — Static typing across the app, giving end-to-end type safety.
-- **Cloudflare Workers** — Serverless compute on V8 isolates at the edge.
-- **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready components.
-- **Biome** — Lint and format in one fast, consistent tool.
-- **TanStack Start** — Full-stack React framework, planned for the future private app.
+- **Cloudflare Workers** — Serverless compute on V8 isolates across the edge network.
+- **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready-made components.
+- **Biome** — Linting and formatting in one fast, consistent tool.
+- **TanStack Start** — Full-stack React framework, planned for the private app.
 
 ## Getting Started
 
