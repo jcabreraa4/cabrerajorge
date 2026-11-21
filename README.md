@@ -40,6 +40,7 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 - **Cloudflare Workers** — Serverless compute on V8 isolates at the edge.
 - **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready components.
 - **Biome** — Lint and format in one fast, consistent tool.
+- **TanStack Start** — Full-stack React framework, planned for the future private app.
 
 ## Getting Started
 
