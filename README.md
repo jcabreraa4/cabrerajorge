@@ -22,7 +22,7 @@
 
 ## About
 
-Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](https://cabrerajorge.com). A server-rendered landing built with Hono and deployed on Cloudflare Workers — no framework bloat, minimal client-side JS (HTMX for interactivity).
+Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](https://cabrerajorge.com). A server-rendered landing built with Hono and deployed on Cloudflare Workers: no framework bloat, minimal client-side JS (HTMX for interactivity).
 
 ## Features
 
@@ -32,16 +32,16 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 
 ## Stack
 
-- **Hono** — Lightweight, fast server framework with typed JSX.
-- **Better Auth** — Type-safe authentication with first-class Workers support.
-- **Drizzle** — Type-safe SQL ORM with a lightweight schema-first design.
-- **oRPC** — Type-safe RPC layer built on Web Standards, end to end.
-- **PNPM** — Fast, strict package manager with a tight, reproducible lockfile.
-- **TypeScript** — Static typing across the app, giving end-to-end type safety.
-- **Cloudflare Workers** — Serverless compute on V8 isolates across the edge network.
-- **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready-made components.
-- **Biome** — Linting and formatting in one fast, consistent tool.
-- **TanStack Start** — Full-stack React framework, planned for the private app.
+- **Hono**: Lightweight, fast server framework with typed JSX.
+- **Better Auth**: Type-safe authentication with first-class Workers support.
+- **Drizzle**: Type-safe SQL ORM with a lightweight schema-first design.
+- **oRPC**: Type-safe RPC layer built on Web Standards, end to end.
+- **PNPM**: Fast, strict package manager with a tight, reproducible lockfile.
+- **TypeScript**: Static typing across the app, giving end-to-end type safety.
+- **Cloudflare Workers**: Serverless compute on V8 isolates across the edge network.
+- **Tailwind CSS 4 + DaisyUI**: Utility-first styling with ready-made components.
+- **Biome**: Linting and formatting in one fast, consistent tool.
+- **TanStack Start**: Full-stack React framework, planned for the private app.
 
 ## Getting Started
 
@@ -53,16 +53,16 @@ pnpm dev              # dev server at localhost:3001
 
 ## Roadmap
 
-- [ ] Backend API with Better Auth, Drizzle ORM, oRPC and D1 at `cabrerajorge.com` — the backend and the landing are the same app: the backend serves the landing via HTMX.
+- [ ] Backend API with Better Auth, Drizzle ORM, oRPC and D1 at `cabrerajorge.com`.
 - [ ] Personal MCP server: agents feed on their own data, stored per-user in D1.
 - [ ] Monorepo with Turborepo + pnpm (`apps/backend`, `apps/private`).
-- [ ] Private app with TanStack Start at `app.cabrerajorge.com` — a personal UI consuming the backend API.
+- [ ] Private app with TanStack Start at `app.cabrerajorge.com`: a personal UI consuming the backend API.
 
 ---
 
 ## License
 
-MIT © 2026 Jorge Cabrera — see [LICENSE](LICENSE) for details.
+MIT © 2026 Jorge Cabrera. See [LICENSE](LICENSE) for details.
 
 ---
 
