@@ -10,6 +10,9 @@
 [![Hono](https://img.shields.io/badge/Hono-Framework-F38020?logo=hono&logoColor=white)](https://hono.dev)
 [![Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflareworkers&logoColor=white)](https://workers.cloudflare.com)
 [![Biome](https://img.shields.io/badge/Biome-Lint%20%26%20Format-EFEFEF?logo=biome&logoColor=white)](https://biomejs.dev)
+[![BetterAuth](https://img.shields.io/badge/BetterAuth-Auth-EF4444)](https://www.better-auth.com)
+[![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?logo=drizzle&logoColor=black)](https://orm.drizzle.team)
+[![ORPC](https://img.shields.io/badge/ORPC-API-EF4444)](https://orpc.dev)
 
 ---
 
@@ -26,6 +29,9 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 ## Stack
 
 - **Hono** — Lightweight, fast server framework with typed JSX.
+- **Better Auth** — Authentication library with type-safe sessions and first-class Workers support.
+- **Drizzle** — Type-safe SQL ORM with a lightweight schema-first design.
+- **oRPC** — End-to-end type-safe RPC layer built on Web Standards.
 - **PNPM** — Fast, strict package manager with a tight, reproducible lockfile.
 - **TypeScript** — Static typing across the app, giving end-to-end type safety.
 - **Cloudflare Workers** — Serverless compute on V8 isolates at the edge.
