@@ -13,6 +13,40 @@
 
 ---
 
+## About
+
+Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](https://cabrerajorge.com). A fast, server-rendered landing built with Hono and deployed on Cloudflare Workers — no framework bloat, no client-side JS by default.
+
+## Features
+
+- Server-rendered pages with typed JSX (Hono), zero client runtime.
+- Styling with Tailwind CSS 4 and daisyUI, compiled at build time.
+- Deploys to Cloudflare Workers as a single minimal Worker with static assets.
+
+## Stack
+
+- **Hono** — lightweight, fast server framework with typed JSX.
+- **Cloudflare Workers** — edge hosting with generous free tier.
+- **Tailwind CSS 4 + daisyUI** — utility-first styling with ready components.
+- **Biome** — lint and format in a single tool.
+- **pnpm** — fast, strict package management.
+
+## Getting Started
+
+```bash
+pnpm install          # install dependencies
+cp .env.example .env  # set up environment variables
+pnpm dev              # dev server at localhost:3001
+```
+
+Deploy to Cloudflare:
+
+```bash
+pnpm deploy
+```
+
+---
+
 ## License
 
 MIT © 2026 Jorge Cabrera — see [LICENSE](LICENSE) for details.
