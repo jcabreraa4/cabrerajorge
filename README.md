@@ -7,15 +7,16 @@
 [![License](https://img.shields.io/badge/License-MIT-3178C6.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Language-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Pnpm](https://img.shields.io/badge/PNPM-Package%20Manager-EFEFEF?logo=pnpm&logoColor=white)](https://pnpm.io)
-[![Hono](https://img.shields.io/badge/Hono-Framework-F38020?logo=hono&logoColor=white)](https://hono.dev)
+[![Hono](https://img.shields.io/badge/Hono-Framework-000000?logo=hono&logoColor=white)](https://hono.dev)
 [![Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflareworkers&logoColor=white)](https://workers.cloudflare.com)
+[![D1](https://img.shields.io/badge/D1-Database-F38020?logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/d1)
 [![Biome](https://img.shields.io/badge/Biome-Lint%20%26%20Format-EFEFEF?logo=biome&logoColor=white)](https://biomejs.dev)
 [![BetterAuth](https://img.shields.io/badge/BetterAuth-Auth-EF4444)](https://www.better-auth.com)
 [![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?logo=drizzle&logoColor=black)](https://orm.drizzle.team)
 [![ORPC](https://img.shields.io/badge/ORPC-API-EF4444)](https://orpc.dev)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-EFEFEF?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![HTMX](https://img.shields.io/badge/HTMX-Hypermedia-EFEFEF?logo=htmx&logoColor=white)](https://htmx.org)
-[![TanStack](https://img.shields.io/badge/TanStack-Start-EFEFEF?logo=tanstack&logoColor=white)](https://tanstack.com/start)
+[![TanStack](https://img.shields.io/badge/TanStack-Start-000000?logo=tanstack&logoColor=white)](https://tanstack.com/start)
 
 ---
 
