@@ -15,11 +15,11 @@
 
 ## About
 
-Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](https://cabrerajorge.com). A fast, server-rendered landing built with Hono and deployed on Cloudflare Workers — no framework bloat, no client-side JS by default.
+Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](https://cabrerajorge.com). A server-rendered landing built with Hono and deployed on Cloudflare Workers — no framework bloat, minimal client-side JS (HTMX for interactivity).
 
 ## Features
 
-- Server-rendered pages with typed JSX (Hono), zero client runtime.
+- Server-rendered pages with typed JSX (Hono) and HTMX for dynamic bits.
 - Styling with Tailwind CSS 4 and daisyUI, compiled at build time.
 - Deploys to Cloudflare Workers as a single minimal Worker with static assets.
 
@@ -44,6 +44,13 @@ Deploy to Cloudflare:
 ```bash
 pnpm deploy
 ```
+
+## Roadmap
+
+- [ ] Monorepo with Turborepo + pnpm (`apps/backend`, `apps/private`).
+- [ ] Private app with TanStack Start at `app.cabrerajorge.com`.
+- [ ] Backend API with Better Auth + Drizzle ORM on D1 at `api.cabrerajorge.com`.
+- [ ] Personal MCP server: agents feed on their own data, stored per-user in D1.
 
 ---
 
