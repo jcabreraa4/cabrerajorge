@@ -30,7 +30,7 @@ Personal site and infrastructure of Jorge Cabrera, live at [cabrerajorge.com](ht
 - **TypeScript** — Static typing across the app, giving end-to-end type safety.
 - **Cloudflare Workers** — Edge hosting with generous free tier.
 - **Tailwind CSS 4 + DaisyUI** — Utility-first styling with ready components.
-- **Biome** — Lint and format in a single tool, with fast, consistent checks that catch issues before review.
+- **Biome** — Lint and format in one fast, consistent tool.
 
 ## Getting Started
 
